@@ -24,6 +24,8 @@ public:
   void                        add_task( const Task & task );
   void                        delete_task(unsigned int id);
 
+  void                        finish_task(unsigned int id);
+
   void                        save() const;
 
 };

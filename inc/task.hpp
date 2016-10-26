@@ -30,25 +30,31 @@
 #define __TASK_HPP
 
 #include <string>
+#include <vector>
+#include <iostream>
 
 // -----------------------------------------------------------------------------
 
 class Task{
 private:
   std::string data;
+  bool finished;
   bool deleted;
 
 public:
   Task();
-  Task( const std::string & data );
+  Task( const std::string & new_data );
 
-  void set_data( const std::string & new_data );
+  void set_data( const std::string & task_data );
   const std::string & get_data() const;
 
-  const std::string & to_str() const;
+  std::string to_str() const;
 
   bool is_deleted() const;
   void mark_deleted();
+
+  bool is_finished() const;
+  void finish();
 };
 
 // -----------------------------------------------------------------------------

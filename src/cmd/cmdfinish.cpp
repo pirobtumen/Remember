@@ -44,6 +44,8 @@ CmdFinish::CmdFinish(unsigned int new_id)
 
 void CmdFinish::execute() const{
   tasker -> finish_task(id);
+  tasker -> save();
+  
   std::cout << "Task " << id << " finished." << std::endl;
 }
 

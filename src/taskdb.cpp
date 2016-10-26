@@ -96,6 +96,12 @@ void TaskDB::delete_task(unsigned int id){
 
 // -----------------------------------------------------------------------------
 
+void TaskDB::finish_task(unsigned int id){
+  task_list[id-1].finish();
+}
+
+// -----------------------------------------------------------------------------
+
 const std::vector<Task> & TaskDB::get_task_list() const{
   return task_list;
 }

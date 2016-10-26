@@ -39,10 +39,11 @@
 #include "taskdb.hpp"
 #include "tasker.hpp"
 
-#include "command.hpp"
-#include "cmdget.hpp"
-#include "cmdadd.hpp"
-#include "cmddel.hpp"
+#include "cmd/command.hpp"
+#include "cmd/cmdget.hpp"
+#include "cmd/cmdadd.hpp"
+#include "cmd/cmddel.hpp"
+#include "cmd/cmdfinish.hpp"
 
 // TODO: Improve
 Command * parse_args(int args, char * argc[]){
@@ -54,6 +55,7 @@ Command * parse_args(int args, char * argc[]){
 
   char add[] = "add";
   char del[] = "del";
+  char finish[] = "finish";
 
   if(args > 2){
 
@@ -73,6 +75,12 @@ Command * parse_args(int args, char * argc[]){
     // -----------------------------------------------
     else if( strcmp(argc[1],del) == 0 ){
       cmd = new CmdDel( std::atoi(argc[2]) );
+    }
+
+    // FINISH TASK
+    // -----------------------------------------------
+    else if( strcmp(argc[1],finish) == 0 ){
+      cmd = new CmdFinish( std::atoi(argc[2]) );
     }
 
     // ERROR

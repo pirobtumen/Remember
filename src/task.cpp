@@ -31,21 +31,55 @@
 // -----------------------------------------------------------------------------
 
 Task::Task()
-:data(""), deleted(false)
-{}
-
-// -----------------------------------------------------------------------------
-
-Task::Task( const std::string & data )
-:deleted(false)
 {
-  set_data(data);
+  data = "";
+  deleted = false;
+  finished = false;
 }
 
 // -----------------------------------------------------------------------------
 
-void Task::set_data( const std::string & new_data ){
-  data = new_data;
+Task::Task( const std::string & new_data )
+{
+  data = "";
+  deleted = false;
+  finished = false;
+  set_data(new_data);
+}
+
+// -----------------------------------------------------------------------------
+
+void Task::set_data( const std::string & task_data ){
+  std::vector<std::string> data_split;
+  std::string tmp = "";
+  char next_char;
+  unsigned int data_size = task_data.size();
+
+  for( unsigned int i = 0; i < data_size; i++ ){
+
+    next_char = task_data[i];
+
+    if(next_char == ','){
+
+      data_split.push_back(tmp);
+      tmp = "";
+
+    }
+    else
+      tmp += next_char;
+
+  }
+
+  data_split.push_back(tmp);
+
+  if(data_split.size() >= 1 )
+    data = data_split[0];
+
+  if( data_split.size() == 2 && data_split[1][0] == '1' )
+    finished = true;
+  else
+    finished = false;
+
 }
 
 // -----------------------------------------------------------------------------
@@ -56,8 +90,12 @@ const std::string & Task::get_data() const{
 
 // -----------------------------------------------------------------------------
 
-const std::string & Task::to_str() const{
-  return data;
+std::string Task::to_str() const{
+
+  char char_finished = (finished)? '1' : '0';
+  std::string task_data = data + ',' + char_finished;
+
+  return task_data;
 }
 
 // -----------------------------------------------------------------------------
@@ -70,6 +108,18 @@ bool Task::is_deleted() const{
 
 void Task::mark_deleted(){
   deleted = true;
+}
+
+// -----------------------------------------------------------------------------
+
+bool Task::is_finished() const{
+  return finished;
+}
+
+// -----------------------------------------------------------------------------
+
+void Task::finish(){
+  finished = !finished;
 }
 
 // -----------------------------------------------------------------------------

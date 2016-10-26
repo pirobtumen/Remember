@@ -10,7 +10,7 @@ LDFLAGS=
 SOURCES= $(wildcard $(SRC)*.cpp)
 # OBJECTS = $(SOURCES: .cpp=.o)
 OBJECTS=$(patsubst $(SRC)%.cpp,$(OBJ)%.o, $(SOURCES))
-EXECUTABLE=tasker
+EXECUTABLE=remember
 
 all: $(SOURCES) $(BIN)$(EXECUTABLE)
 

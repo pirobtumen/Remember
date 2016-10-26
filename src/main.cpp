@@ -96,9 +96,8 @@ int main( int args, char ** argc ){
   Command * command;
   Tasker tasker;
 
-  command->set_tasker(&tasker);
-
   command = parse_args(args,argc);
+  command->set_tasker(&tasker);
 
   command->execute();
   delete command;

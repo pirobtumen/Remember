@@ -7,7 +7,7 @@ CC=g++
 CFLAGS= -Wall -O2 -I$(INC)
 LDFLAGS=
 
-SOURCES= $(wildcard $(SRC)*.cpp)
+SOURCES= $(wildcard $(SRC)*.cpp) $(wildcard $(SRC)*/*.cpp)
 # OBJECTS = $(SOURCES: .cpp=.o)
 OBJECTS=$(patsubst $(SRC)%.cpp,$(OBJ)%.o, $(SOURCES))
 EXECUTABLE=remember
@@ -15,6 +15,7 @@ EXECUTABLE=remember
 all: $(SOURCES) $(BIN)$(EXECUTABLE)
 
 $(BIN)$(EXECUTABLE): $(OBJECTS)
+	echo $(OBJECTS)
 	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
 
 $(OBJ)%.o: $(SRC)%.cpp
@@ -22,3 +23,6 @@ $(OBJ)%.o: $(SRC)%.cpp
 
 clean:
 	rm $(OBJ)* $(BIN)*
+
+test:
+	echo $(patsubst %.cpp, %.o, $(SOURCES))

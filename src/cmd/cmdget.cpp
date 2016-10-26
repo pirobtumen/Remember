@@ -43,7 +43,7 @@ void CmdGet::execute() const{
   for(auto & task: task_list){
 
     if(task.is_finished()){
-      std::cout << count << " - " << "\033[9m" << task.get_data() << "\033[0m"<< std::endl;
+      std::cout << "\033[9m" << count << " - "  << task.get_data() << "\033[0m"<< std::endl;
     }
     else{
       std::cout << count << " - " << task.get_data() << std::endl;

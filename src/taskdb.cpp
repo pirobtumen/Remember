@@ -30,16 +30,24 @@
 
 // -----------------------------------------------------------------------------
 
-TaskDB::TaskDB(){
+TaskDB::TaskDB(){}
 
-  read();
+// -----------------------------------------------------------------------------
 
+TaskDB::TaskDB(const std::string & name){
+  set_name(name);
+}
+
+// -----------------------------------------------------------------------------
+
+void TaskDB::set_name(const std::string & name){
+  db_file_name = name;
 }
 
 // -----------------------------------------------------------------------------
 
 void TaskDB::read(){
-  std::ifstream file("task.txt", std::ofstream::in );
+  std::ifstream file(db_file_name, std::ofstream::in );
   std::string line;
 
   if( file.is_open() ){

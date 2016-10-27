@@ -12,11 +12,13 @@
 class TaskDB{
 private:
   std::vector<Task> task_list;
-
-  void read();
+  std::string db_file_name;
 
 public:
   TaskDB();
+  TaskDB(const std::string & name);
+
+  void set_name(const std::string & name);
 
   const Task &                get_task( unsigned int id ) const;
   const std::vector<Task> &   get_task_list() const;
@@ -26,6 +28,7 @@ public:
 
   void                        finish_task(unsigned int id);
 
+  void read();
   void                        save() const;
 
 };

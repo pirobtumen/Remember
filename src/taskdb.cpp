@@ -68,15 +68,26 @@ void TaskDB::read(){
 // -----------------------------------------------------------------------------
 
 void TaskDB::save() const{
-
-  std::ofstream file("task.txt", std::ofstream::out | std::ofstream::trunc);
+  /*
+    Save not deleted tasks, and moves finished to the end of the file.
+  */
+  std::ofstream file(db_file_name, std::ofstream::out | std::ofstream::trunc);
+  std::vector<Task> finished;
 
   for( auto & task : task_list ){
 
-    if(!task.is_deleted())
-      file << task.to_str() << std::endl;
+    if(!task.is_deleted()){
+      if(!task.is_finished())
+        file << task.to_str() << std::endl;
+
+      else
+        finished.push_back(task);
+    }
 
   }
+
+  for( auto & task : finished )
+    file << task.to_str() << std::endl;
 
   file.close();
 

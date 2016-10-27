@@ -12,17 +12,18 @@ SOURCES= $(wildcard $(SRC)*.cpp) $(wildcard $(SRC)*/*.cpp)
 OBJECTS=$(patsubst $(SRC)%.cpp,$(OBJ)%.o, $(SOURCES))
 EXECUTABLE=remember
 
-all: $(SOURCES) $(BIN)$(EXECUTABLE)
+all: dir $(SOURCES) $(BIN)$(EXECUTABLE)
+
+dir:
+	mkdir $(BIN)
+	mkdir $($OBJ) $($OBJ)cmd
 
 $(BIN)$(EXECUTABLE): $(OBJECTS)
-	echo $(OBJECTS)
+
 	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
 
 $(OBJ)%.o: $(SRC)%.cpp
 	$(CC) -c $(CFLAGS) $< -o $@
 
 clean:
-	rm $(OBJ)* $(BIN)*
-
-test:
-	echo $(patsubst %.cpp, %.o, $(SOURCES))
+	rm -f $(OBJ)cmd/*.o $(OBJ)*.o $(BIN)*

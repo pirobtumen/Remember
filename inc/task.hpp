@@ -40,7 +40,8 @@
 class Task{
 private:
   std::string data;
-  Date date;
+  Date created_date;
+  Date end_date;
   bool finished;
   bool deleted;
 
@@ -48,18 +49,23 @@ public:
   Task();
   Task( const std::string & new_data );
 
-  void set_data( const std::string & task_data );
+  void            load_from_str( const std::string & task_data );
+  std::string     to_str() const;
 
-  void set_task(const std::string & task);
-  const std::string & get_task() const;
+  void            set_task(const std::string & task);
+  const           std::string & get_task() const;
 
-  std::string to_str() const;
+  const           Date & get_created_date() const;
+  const           Date & get_end_date() const;
 
-  bool is_deleted() const;
-  void mark_deleted();
+  void            set_created_date(const Date & date);
+  void            set_end_date(const Date & date);
 
-  bool is_finished() const;
-  bool finish();
+  bool            is_deleted() const;
+  void            mark_deleted();
+
+  bool            is_finished() const;
+  bool            finish();
 };
 
 // -----------------------------------------------------------------------------

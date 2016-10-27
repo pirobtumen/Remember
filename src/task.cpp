@@ -35,7 +35,7 @@ Task::Task()
   data = "";
   deleted = false;
   finished = false;
-  date.set_current();
+  created_date.set_current();
 }
 
 // -----------------------------------------------------------------------------
@@ -45,12 +45,12 @@ Task::Task( const std::string & new_data )
   data = "";
   deleted = false;
   finished = false;
-  set_data(new_data);
+  load_from_str(new_data);
 }
 
 // -----------------------------------------------------------------------------
 
-void Task::set_data( const std::string & task_data ){
+void Task::load_from_str( const std::string & task_data ){
   std::vector<std::string> data_split;
   std::string tmp = "";
   char next_char;
@@ -81,8 +81,8 @@ void Task::set_data( const std::string & task_data ){
   else
     finished = false;
 
-  if( data_split.size() == 3 )
-    date.set_from_str(data_split[2]);
+  if( data_split.size() >= 3 )
+    created_date.set_from_str(data_split[2]);
 
 }
 
@@ -108,7 +108,7 @@ std::string Task::to_str() const{
   task_data += separator;
   task_data += char_finished;
   task_data += separator;
-  task_data += date.to_str();
+  task_data += created_date.to_str();
 
   return task_data;
 }
@@ -137,6 +137,18 @@ bool Task::finish(){
   bool last_value = finished;
   finished = !finished;
   return last_value;
+}
+
+// -----------------------------------------------------------------------------
+
+const Date & Task::get_created_date() const{
+  return created_date;
+}
+
+// -----------------------------------------------------------------------------
+
+const Date & Task::get_end_date() const{
+  return end_date;
 }
 
 // -----------------------------------------------------------------------------

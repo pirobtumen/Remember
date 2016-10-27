@@ -46,13 +46,14 @@
 #include "cmd/cmdadd.hpp"
 #include "cmd/cmddel.hpp"
 #include "cmd/cmdfinish.hpp"
+#include "cmd/cmdshow.hpp"
 
-enum CmdType {GET, ADD, DELETE, FINISH, ERROR};
+enum CmdType {GET, ADD, DELETE, FINISH, ERROR, SHOW};
 
 Command * parse_argc(int argc, char * argv[]){
 
   const std::string COMMAND_UNKNOWN_ERROR = "Unknown command.";
-  Command * cmd;
+  Command * cmd = nullptr;
   CmdType input = ERROR;
   std::string cmd_name;
   std::string data;
@@ -77,6 +78,11 @@ Command * parse_argc(int argc, char * argv[]){
   cmd_name = "f";
   command_list.insert(std::pair<std::string,CmdType>(cmd_name, CmdType::FINISH));
 
+  cmd_name = "show";
+  command_list.insert(std::pair<std::string,CmdType>(cmd_name, CmdType::SHOW));
+  cmd_name = "s";
+  command_list.insert(std::pair<std::string,CmdType>(cmd_name, CmdType::SHOW));
+
   if(argc == 1)
     input = GET;
 
@@ -86,6 +92,8 @@ Command * parse_argc(int argc, char * argv[]){
 
     if( found != command_list.end() )
       input = (*found).second;
+    else
+      input = ERROR;
 
   }
 
@@ -114,6 +122,11 @@ Command * parse_argc(int argc, char * argv[]){
       std::cout << COMMAND_UNKNOWN_ERROR << std::endl;
       exit(-1);
       // TODO: Show help.
+      break;
+
+    case SHOW:
+      cmd = new CmdShow( std::atoi(argv[2]) );
+      break;
   }
 
   return cmd;
@@ -121,7 +134,7 @@ Command * parse_argc(int argc, char * argv[]){
 
 int main( int argc, char ** argv ){
 
-  Command * command;
+  Command * command = nullptr;
   Tasker tasker;
 
   command = parse_argc(argc,argv);

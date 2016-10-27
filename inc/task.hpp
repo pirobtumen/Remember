@@ -54,7 +54,7 @@ public:
   void mark_deleted();
 
   bool is_finished() const;
-  void finish();
+  bool finish();
 };
 
 // -----------------------------------------------------------------------------

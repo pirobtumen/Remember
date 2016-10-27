@@ -118,8 +118,10 @@ bool Task::is_finished() const{
 
 // -----------------------------------------------------------------------------
 
-void Task::finish(){
+bool Task::finish(){
+  bool last_value = finished;
   finished = !finished;
+  return last_value;
 }
 
 // -----------------------------------------------------------------------------

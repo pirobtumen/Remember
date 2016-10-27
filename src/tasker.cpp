@@ -74,8 +74,8 @@ void Tasker::save() const{
 
 // -----------------------------------------------------------------------------
 
-void Tasker::finish_task(unsigned int id){
-  task_db.finish_task(id);
+bool Tasker::finish_task(unsigned int id){
+  return task_db.finish_task(id);
 }
 
 // -----------------------------------------------------------------------------

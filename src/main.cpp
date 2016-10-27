@@ -34,6 +34,8 @@
 #include <cstring>
 #include <iostream>
 #include <string>
+#include <map>
+#include <utility>
 
 #include "task.hpp"
 #include "taskdb.hpp"
@@ -45,66 +47,84 @@
 #include "cmd/cmddel.hpp"
 #include "cmd/cmdfinish.hpp"
 
-// TODO: Improve
-Command * parse_args(int args, char * argc[]){
+enum CmdType {GET, ADD, DELETE, FINISH, ERROR};
+
+Command * parse_argc(int argc, char * argv[]){
 
   const std::string COMMAND_UNKNOWN_ERROR = "Unknown command.";
   Command * cmd;
+  CmdType input = ERROR;
   std::string cmd_name;
   std::string data;
 
-  char add[] = "add";
-  char del[] = "del";
-  char finish[] = "finish";
+  std::map<std::string,CmdType> command_list;
+  std::map<std::string,CmdType>::iterator found;
 
-  if(args > 2){
+  cmd_name = "add";
+  command_list.insert(std::pair<std::string,CmdType>(cmd_name,CmdType::ADD));
+  cmd_name = "a";
+  command_list.insert(std::pair<std::string,CmdType>(cmd_name,CmdType::ADD));
 
-    // ADD TASK
-    // -----------------------------------------------
-    if( strcmp(argc[1],add) == 0 ){
+  cmd_name = "delete";
+  command_list.insert(std::pair<std::string,CmdType>(cmd_name,CmdType::DELETE));
+  cmd_name = "del";
+  command_list.insert(std::pair<std::string,CmdType>(cmd_name,CmdType::DELETE));
+  cmd_name = "d";
+  command_list.insert(std::pair<std::string,CmdType>(cmd_name,CmdType::DELETE));
 
-      for(int i = 2; i < args; i++){
-        data += argc[i];
+  cmd_name = "finish";
+  command_list.insert(std::pair<std::string,CmdType>(cmd_name, CmdType::FINISH));
+  cmd_name = "f";
+  command_list.insert(std::pair<std::string,CmdType>(cmd_name, CmdType::FINISH));
+
+  if(argc == 1)
+    input = GET;
+
+  else if(argc > 2){
+
+    found = command_list.find(argv[1]);
+
+    if( found != command_list.end() )
+      input = (*found).second;
+
+  }
+
+  switch (input) {
+    case ADD:
+      for(int i = 2; i < argc; i++){
+        data += argv[i];
         data += " ";
       }
-
       cmd = new CmdAdd(data);
-    }
+      break;
 
-    // DELETE TASK
-    // -----------------------------------------------
-    else if( strcmp(argc[1],del) == 0 ){
-      cmd = new CmdDel( std::atoi(argc[2]) );
-    }
+    case DELETE:
+      cmd = new CmdDel( std::atoi(argv[2]) );
+      break;
 
-    // FINISH TASK
-    // -----------------------------------------------
-    else if( strcmp(argc[1],finish) == 0 ){
-      cmd = new CmdFinish( std::atoi(argc[2]) );
-    }
+    case FINISH:
+      cmd = new CmdFinish( std::atoi(argv[2]) );
+      break;
 
-    // ERROR
-    // -----------------------------------------------
-    else{
+    case GET:
+      cmd = new CmdGet();
+      break;
+
+    case ERROR:
       std::cout << COMMAND_UNKNOWN_ERROR << std::endl;
       exit(-1);
       // TODO: Show help.
-    }
-
-  }
-  else{
-    cmd = new CmdGet();
   }
 
   return cmd;
 }
 
-int main( int args, char ** argc ){
+int main( int argc, char ** argv ){
 
   Command * command;
   Tasker tasker;
 
-  command = parse_args(args,argc);
+  command = parse_argc(argc,argv);
   command->set_tasker(&tasker);
 
   command->execute();

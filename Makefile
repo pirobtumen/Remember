@@ -15,8 +15,8 @@ EXECUTABLE=remember
 all: dir $(SOURCES) $(BIN)$(EXECUTABLE)
 
 dir:
-	mkdir $(BIN)
-	mkdir $($OBJ) $($OBJ)cmd
+	mkdir -p $(BIN)
+	mkdir -p $($OBJ) $($OBJ)cmd
 
 $(BIN)$(EXECUTABLE): $(OBJECTS)
 

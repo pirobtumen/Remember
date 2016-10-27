@@ -43,7 +43,11 @@ CmdAdd::CmdAdd(const std::string & new_data)
 // -----------------------------------------------------------------------------
 
 void CmdAdd::execute() const{
-  tasker -> add_task(Task(data));
+  Task task;
+
+  task.set_task(data);
+
+  tasker -> add_task(task);
   tasker -> save();
   std::cout << "Task added." << std::endl;
 }

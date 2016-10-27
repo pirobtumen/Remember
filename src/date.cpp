@@ -26,117 +26,110 @@
 
 // -----------------------------------------------------------------------------
 
-#include "task.hpp"
+#include "date.hpp"
+#include <iostream>
 
 // -----------------------------------------------------------------------------
 
-Task::Task()
-{
-  data = "";
-  deleted = false;
-  finished = false;
-  date.set_current();
+Date::Date(){
+  separator = '/';
+  set_date(0,0,0);
 }
 
 // -----------------------------------------------------------------------------
 
-Task::Task( const std::string & new_data )
-{
-  data = "";
-  deleted = false;
-  finished = false;
-  set_data(new_data);
+void Date::set_date(short int iday, short int imonth, int iyear){
+  day = iday;
+  month = imonth;
+  year = iyear;
 }
 
 // -----------------------------------------------------------------------------
 
-void Task::set_data( const std::string & task_data ){
-  std::vector<std::string> data_split;
-  std::string tmp = "";
-  char next_char;
-  unsigned int data_size = task_data.size();
+short int Date::get_day() const{ return day; }
 
-  for( unsigned int i = 0; i < data_size; i++ ){
+// -----------------------------------------------------------------------------
 
-    next_char = task_data[i];
+short int Date::get_month() const{ return month; }
 
-    if(next_char == ','){
+// -----------------------------------------------------------------------------
 
-      data_split.push_back(tmp);
-      tmp = "";
+int Date::get_year() const{ return year; }
 
+// -----------------------------------------------------------------------------
+
+void Date::set_day(short int iday){ day = iday; }
+
+// -----------------------------------------------------------------------------
+
+void Date::set_month(short int imonth){ month = imonth; }
+
+// -----------------------------------------------------------------------------
+
+void Date::set_year(int iyear){ year = iyear; }
+
+// -----------------------------------------------------------------------------
+
+void Date::set_current(){
+  const int BASE_YEAR = 1900;
+  std::time_t time_ = std::time(nullptr);
+  std::tm * current_time = std::localtime(&time_);
+
+  day = current_time->tm_mday;
+  month = current_time->tm_mon;
+  year = BASE_YEAR + current_time->tm_year;
+
+}
+
+// -----------------------------------------------------------------------------
+
+void Date::set_from_str(const std::string & date){
+  //TODO: improve
+
+  std::vector<std::string> date_parts;
+  std::string word = "";
+
+  for( auto c: date ){
+
+    if( c == separator ){
+      date_parts.push_back(word);
+      word = "";
     }
     else
-      tmp += next_char;
+      word += c;
 
   }
 
-  data_split.push_back(tmp);
+  date_parts.push_back(word);
 
-  if(data_split.size() >= 1 )
-    data = data_split[0];
-
-  if( data_split.size() >= 2 && data_split[1][0] == '1' )
-    finished = true;
-  else
-    finished = false;
-
-  if( data_split.size() == 3 )
-    date.set_from_str(data_split[2]);
+  day = std::stoi(date_parts[0]);
+  month = std::stoi(date_parts[1]);
+  year = std::stoi(date_parts[2]);
 
 }
 
 // -----------------------------------------------------------------------------
 
-void Task::set_task(const std::string & task){
-  data = task;
-}
-// -----------------------------------------------------------------------------
+std::string Date::to_str() const{
+  std::string date = "";
 
-const std::string & Task::get_task() const{
-  return data;
-}
+  date += std::to_string(day);
+  date += separator;
+  date += std::to_string(month);
+  date += separator;
+  date += std::to_string(year);
 
-// -----------------------------------------------------------------------------
-
-std::string Task::to_str() const{
-  const char separator = ',';
-
-  char char_finished = (finished)? '1' : '0';
-  std::string task_data = data;
-
-  task_data += separator;
-  task_data += char_finished;
-  task_data += separator;
-  task_data += date.to_str();
-
-  return task_data;
+  return date;
 }
 
 // -----------------------------------------------------------------------------
 
-bool Task::is_deleted() const{
-  return deleted;
-}
+Date & Date::operator=(const Date & date){
+  day = date.day;
+  month = date.month;
+  year = date.year;
 
-// -----------------------------------------------------------------------------
-
-void Task::mark_deleted(){
-  deleted = true;
-}
-
-// -----------------------------------------------------------------------------
-
-bool Task::is_finished() const{
-  return finished;
-}
-
-// -----------------------------------------------------------------------------
-
-bool Task::finish(){
-  bool last_value = finished;
-  finished = !finished;
-  return last_value;
+  return (*this);
 }
 
 // -----------------------------------------------------------------------------

@@ -4,7 +4,7 @@ BIN=bin/
 INC=inc/
 
 CC=g++
-CFLAGS= -Wall -O2 -I$(INC)
+CFLAGS= -Wall -O2 -I$(INC) -std=c++11
 LDFLAGS=
 
 SOURCES= $(wildcard $(SRC)*.cpp) $(wildcard $(SRC)*/*.cpp)

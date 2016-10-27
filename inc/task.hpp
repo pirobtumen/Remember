@@ -33,11 +33,14 @@
 #include <vector>
 #include <iostream>
 
+#include "date.hpp"
+
 // -----------------------------------------------------------------------------
 
 class Task{
 private:
   std::string data;
+  Date date;
   bool finished;
   bool deleted;
 
@@ -46,7 +49,9 @@ public:
   Task( const std::string & new_data );
 
   void set_data( const std::string & task_data );
-  const std::string & get_data() const;
+
+  void set_task(const std::string & task);
+  const std::string & get_task() const;
 
   std::string to_str() const;
 

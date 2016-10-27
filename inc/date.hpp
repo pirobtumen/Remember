@@ -26,31 +26,43 @@
 
 // -----------------------------------------------------------------------------
 
-#include "cmd/cmdget.hpp"
+#ifndef __DATE_HPP
+#define __DATE_HPP
+
+#include <ctime>
+#include <string>
+#include <vector>
 
 // -----------------------------------------------------------------------------
 
-CmdGet::CmdGet(){}
+class Date{
+private:
+  char separator;
+
+  short int  day;
+  short int  month;
+  int        year;
+
+public:
+                  Date();
+
+  void            set_date(short int day, short int month, int year);
+  void            set_current();
+
+  short int       get_day() const;
+  short int       get_month() const;
+  int             get_year() const;
+
+  void            set_day(short int iday);
+  void            set_month(short int imonth);
+  void            set_year(int year);
+
+  void            set_from_str(const std::string & date);
+  std::string     to_str() const;
+
+  Date &          operator=(const Date & date);
+};
 
 // -----------------------------------------------------------------------------
 
-void CmdGet::execute() const{
-  unsigned int count = 1;
-  const std::vector<Task> & task_list = tasker -> get_task_list();
-
-  std::cout << "ID" << " " << "Task" << std::endl;
-  std::cout << "--" << " " << "----------------------------------" << std::endl;
-  for(auto & task: task_list){
-
-    if(task.is_finished()){
-      std::cout << "\033[9m" << count << " - "  << task.get_task() << "\033[0m"<< std::endl;
-    }
-    else{
-      std::cout << count << " - " << task.get_task() << std::endl;
-    }
-    count++;
-  }
-
-}
-
-// -----------------------------------------------------------------------------
+#endif

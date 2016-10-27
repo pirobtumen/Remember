@@ -8,6 +8,7 @@ Simple command line task manager.
 - add, a [Task]     -> Add a new task.
 - delete, del, d [Task ID]  -> Delete task.
 - finish, f [Task ID] -> Finish task.
+- show, s [Task ID] -> Show task info.
 
 ## To Do
 

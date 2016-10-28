@@ -2,13 +2,18 @@
 
 Simple command line task manager.
 
-## Arguments
+## Commands
 
-- No arguments   -> Get all tasks.
-- add, a [Task]     -> Add a new task.
-- delete, del, d [Task ID]  -> Delete task.
-- finish, f [Task ID] -> Finish task.
+- help, h -> Show help.
+- get, g, (empty)   -> Get all tasks.
 - show, s [Task ID] -> Show task info.
+- add, a [Task]     -> Add a new task.
+- delete, del, d <Task IDs ...>  -> Delete task.
+- finish, f <Task IDs... > -> Finish task.
+
+## Add
+
+- -f DD/MM/YY - End date.
 
 ## To Do
 

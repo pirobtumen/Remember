@@ -30,22 +30,35 @@
 
 // -----------------------------------------------------------------------------
 
-CmdShow::CmdShow(unsigned int iid){
-  id = iid;
+CmdShow::CmdShow(int argc, char * argv[]){
+  parse(argc,argv);
 }
 
 // -----------------------------------------------------------------------------
 
 void CmdShow::execute() const{
-  const Task & task = tasker -> get_task(id);
-  std::string finished = (task.is_finished()) ? "yes" : "no";
+  Task task;
+  unsigned int id;
+  std::string finished;
 
-  std::cout << "-------------------------------------------" << std::endl;
-  std::cout << "ID:       " << id << std::endl;
-  std::cout << "Task:     " << task.get_task() << std::endl;
-  std::cout << "Created:  " << task.get_created_date().to_str() << std::endl;
-  std::cout << "Finished: " << finished << std::endl;
-  std::cout << "-------------------------------------------" << std::endl;
+  if(data.size() != 1){
+    //ERR
+  }
+  else{
+    id = std::stoi(data[0]);
+    task = tasker -> get_task(id);
+
+    finished = (task.is_finished()) ? "yes" : "no";
+
+    std::cout << "-------------------------------------------" << std::endl;
+    std::cout << "ID:       " << id << std::endl;
+    std::cout << "Task:     " << task.get_task() << std::endl;
+    std::cout << "Created:  " << task.get_created_date().to_str() << std::endl;
+    std::cout << "Finished: " << finished << std::endl;
+    std::cout << "-------------------------------------------" << std::endl;
+  }
+
+
 
 }
 

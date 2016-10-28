@@ -39,7 +39,7 @@ private:
   unsigned int id;
 
 public:
-  CmdShow(unsigned int id);
+  CmdShow(int argc, char * argv[]);
   void execute() const;
 };
 

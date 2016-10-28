@@ -34,12 +34,8 @@
 // -----------------------------------------------------------------------------
 
 class CmdFinish : public Command{
-private:
-  unsigned int id;
-
 public:
-  CmdFinish();
-  CmdFinish(unsigned int new_id);
+  CmdFinish(int argc, char * argv[]);
 
   void execute() const;
 };

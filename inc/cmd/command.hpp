@@ -30,6 +30,10 @@
 #define __COMMAND_HPP
 
 #include <string>
+#include <vector>
+#include <set>
+#include <map>
+#include <utility>
 #include <iostream>
 #include "tasker.hpp"
 
@@ -38,6 +42,14 @@
 class Command{
 protected:
   static Tasker * tasker;
+
+  std::vector<std::string> data;
+  std::map<std::string,bool> options;
+  std::map<std::string,std::string> arguments;
+
+  void add_option(const char * opt);
+  void add_argument(const char * opt);
+  void parse(int argc, char * argv[]);
 
 public:
   Command();

@@ -36,12 +36,8 @@
 
 class CmdAdd : public Command{
 
-private:
-  std::string data;
-
 public:
-  CmdAdd();
-  CmdAdd(const std::string & data);
+  CmdAdd(int argc, char * argv[]);
 
   void execute() const;
 };

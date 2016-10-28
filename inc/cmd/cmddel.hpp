@@ -34,12 +34,8 @@
 // -----------------------------------------------------------------------------
 
 class CmdDel : public Command{
-private:
-  unsigned int id;
-
 public:
-  CmdDel();
-  CmdDel(unsigned int new_id);
+  CmdDel(int argc, char * argv[]);
 
   void execute() const;
 };

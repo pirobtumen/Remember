@@ -30,25 +30,36 @@
 
 // -----------------------------------------------------------------------------
 
-CmdAdd::CmdAdd()
-:data()
-{}
+CmdAdd::CmdAdd(int argc, char * argv[]){
 
-// -----------------------------------------------------------------------------
+  add_argument("-f"); // Finish date
 
-CmdAdd::CmdAdd(const std::string & new_data)
-:data(new_data)
-{}
+  parse(argc, argv);
+}
 
 // -----------------------------------------------------------------------------
 
 void CmdAdd::execute() const{
+  // TODO: check if date is correct
+  std::map<std::string,std::string>::const_iterator find;
+  std::string end_date = "-f";
+  std::string task_data = "";
   Task task;
 
-  task.set_task(data);
+  // Error if empty
+
+  for(auto & word: data)
+    task_data += word + ' ';
+
+  find = arguments.find(end_date);
+  if( find != arguments.end() )
+    task.set_end_date(Date(find->second));
+
+  task.set_task(task_data);
 
   tasker -> add_task(task);
   tasker -> save();
+
   std::cout << "Task added." << std::endl;
 }
 

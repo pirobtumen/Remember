@@ -30,22 +30,22 @@
 
 // -----------------------------------------------------------------------------
 
-CmdDel::CmdDel()
-:id(-1)
-{}
-
-// -----------------------------------------------------------------------------
-
-CmdDel::CmdDel(unsigned int new_id)
-:id(new_id)
-{}
+CmdDel::CmdDel(int argc, char * argv[]){
+  parse(argc,argv);
+}
 
 // -----------------------------------------------------------------------------
 
 void CmdDel::execute() const{
-  tasker -> delete_task(id);
+  unsigned int id;
+
+  for( auto & id_str: data){
+    id = std::stoi(id_str);
+    tasker -> delete_task(id);
+    std::cout << "Task " << id << " deleted" << std::endl;
+  }
+
   tasker -> save();
-  std::cout << "Task deleted" << std::endl;
 }
 
 // -----------------------------------------------------------------------------

@@ -38,6 +38,68 @@ Command::Command(){}
 
 // -----------------------------------------------------------------------------
 
+void Command::add_option(const char * opt){
+  options.insert(std::pair<const char *, bool>(opt,false));
+}
+
+// -----------------------------------------------------------------------------
+
+void Command::add_argument(const char * opt){
+  arguments.insert(std::pair<const char *,std::string>(opt,std::string()));
+}
+
+// -----------------------------------------------------------------------------
+
+void Command::parse(int argc, char * argv[]){
+
+  char c;
+
+  bool arg = false;
+  bool err = false;
+
+  std::map<std::string,bool>::iterator opt_find;
+  std::map<std::string,std::string>::iterator arg_find;
+
+  for(int i = 2; i < argc && !err; i++ ){
+
+    c = argv[i][0];
+
+    if( c == '-' && !arg ){
+
+      opt_find = options.find(argv[i]);
+
+      if(opt_find != options.end())
+        opt_find->second = true;
+
+      else{
+        arg_find = arguments.find(argv[i]);
+        if( arg_find != arguments.end() )
+          arg = true;
+
+      }
+    }
+
+    else if( c == '-' && arg )
+      err = true;
+
+    else if(arg){
+      std::cout << "OK " << argv[i] << std::endl;
+      arg_find->second = argv[i];
+      arg = false;
+    }
+
+    else
+      data.push_back(argv[i]);
+
+
+  }
+
+  // TODO: If error -> Show.
+
+}
+
+// -----------------------------------------------------------------------------
+
 void Command::set_tasker(Tasker * new_tasker) const{
   tasker = new_tasker;
 }

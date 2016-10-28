@@ -30,26 +30,27 @@
 
 // -----------------------------------------------------------------------------
 
-CmdFinish::CmdFinish()
-:id(-1)
-{}
-
-// -----------------------------------------------------------------------------
-
-CmdFinish::CmdFinish(unsigned int new_id)
-:id(new_id)
-{}
+CmdFinish::CmdFinish(int argc, char * argv[]){
+  parse(argc,argv);
+}
 
 // -----------------------------------------------------------------------------
 
 void CmdFinish::execute() const{
-  bool finished = tasker -> finish_task(id);
-  tasker -> save();
+  bool finished;
+  unsigned int id;
 
-  if(!finished)
-    std::cout << "Task " << id << " finished." << std::endl;
-  else
-    std::cout << "Task " << id << " unfinished." << std::endl;
+  for(auto & id_str: data){
+    id = std::stoi(id_str);
+    finished = tasker -> finish_task(id);
+
+    if(!finished)
+      std::cout << "Task " << id << " finished." << std::endl;
+    else
+      std::cout << "Task " << id << " unfinished." << std::endl;
+  }
+
+  tasker -> save();
 }
 
 // -----------------------------------------------------------------------------

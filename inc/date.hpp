@@ -45,6 +45,7 @@ private:
 
 public:
                   Date();
+                  Date(const std::string & date);
 
   void            set_date(short int day, short int month, int year);
   void            set_current();

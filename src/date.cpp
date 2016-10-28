@@ -38,6 +38,13 @@ Date::Date(){
 
 // -----------------------------------------------------------------------------
 
+Date::Date(const std::string & date){
+  set_from_str(date);
+}
+
+
+// -----------------------------------------------------------------------------
+
 void Date::set_date(short int iday, short int imonth, int iyear){
   day = iday;
   month = imonth;

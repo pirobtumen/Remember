@@ -25,9 +25,14 @@
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
+//
 //  Remember
 //
+//  ============================================================================
+//
 //  Simple command line task-manager.
+//
+//  Alberto Sola - 2016
 //
 // -----------------------------------------------------------------------------
 
@@ -47,99 +52,106 @@
 #include "cmd/cmddel.hpp"
 #include "cmd/cmdfinish.hpp"
 #include "cmd/cmdshow.hpp"
+#include "cmd/cmdhelp.hpp"
 
-enum CmdType {GET, ADD, DELETE, FINISH, ERROR, SHOW};
+// -----------------------------------------------------------------------------
 
-Command * parse_argc(int argc, char * argv[]){
+enum CmdType {GET, ADD, DELETE, FINISH, SHOW, HELP};
 
-  const std::string COMMAND_UNKNOWN_ERROR = "Unknown command.";
+// -----------------------------------------------------------------------------
+
+Command * parse_command(int argc, char * argv[]){
+  /*
+    Get the command and execute it.
+
+    The "Command" object is the one that parses the options.
+  */
   Command * cmd = nullptr;
-  CmdType input = ERROR;
-  std::string cmd_name;
-  std::string data;
+
+  CmdType input = ADD;
 
   std::map<std::string,CmdType> command_list;
   std::map<std::string,CmdType>::iterator found;
 
-  cmd_name = "add";
-  command_list.insert(std::pair<std::string,CmdType>(cmd_name,CmdType::ADD));
-  cmd_name = "a";
-  command_list.insert(std::pair<std::string,CmdType>(cmd_name,CmdType::ADD));
+  // 1. Add Commands
+  // ---------------------------------------------------------------------------
 
-  cmd_name = "delete";
-  command_list.insert(std::pair<std::string,CmdType>(cmd_name,CmdType::DELETE));
-  cmd_name = "del";
-  command_list.insert(std::pair<std::string,CmdType>(cmd_name,CmdType::DELETE));
-  cmd_name = "d";
-  command_list.insert(std::pair<std::string,CmdType>(cmd_name,CmdType::DELETE));
+  command_list.insert(std::pair<const char*,CmdType>("add",CmdType::ADD));
+  command_list.insert(std::pair<std::string,CmdType>("a",CmdType::ADD));
 
-  cmd_name = "finish";
-  command_list.insert(std::pair<std::string,CmdType>(cmd_name, CmdType::FINISH));
-  cmd_name = "f";
-  command_list.insert(std::pair<std::string,CmdType>(cmd_name, CmdType::FINISH));
+  command_list.insert(std::pair<const char*,CmdType>("delete",CmdType::DELETE));
+  command_list.insert(std::pair<const char*,CmdType>("del",CmdType::DELETE));
+  command_list.insert(std::pair<const char*,CmdType>("d",CmdType::DELETE));
 
-  cmd_name = "show";
-  command_list.insert(std::pair<std::string,CmdType>(cmd_name, CmdType::SHOW));
-  cmd_name = "s";
-  command_list.insert(std::pair<std::string,CmdType>(cmd_name, CmdType::SHOW));
+  command_list.insert(std::pair<const char*,CmdType>("finish",CmdType::FINISH));
+  command_list.insert(std::pair<const char*,CmdType>("f",CmdType::FINISH));
 
-  if(argc == 1)
-    input = GET;
+  command_list.insert(std::pair<const char*,CmdType>("show",CmdType::SHOW));
+  command_list.insert(std::pair<const char*,CmdType>("s",CmdType::SHOW));
 
-  else if(argc > 2){
+  command_list.insert(std::pair<const char*,CmdType>("get",CmdType::GET));
+  command_list.insert(std::pair<const char*,CmdType>("g",CmdType::GET));
+
+  command_list.insert(std::pair<const char*,CmdType>("help",CmdType::HELP));
+  command_list.insert(std::pair<const char*,CmdType>("h",CmdType::HELP));
+  // 2. Get CommandType
+  // ---------------------------------------------------------------------------
+
+  if(argc > 1){
 
     found = command_list.find(argv[1]);
 
     if( found != command_list.end() )
       input = (*found).second;
-    else
-      input = ERROR;
 
+    else{
+      std::cout << "Unknown command." << std::endl;
+      input = HELP;
+    }
   }
+
+  // 3. Load Command and parse args
+  // ---------------------------------------------------------------------------
 
   switch (input) {
     case ADD:
-      for(int i = 2; i < argc; i++){
-        data += argv[i];
-        data += " ";
-      }
-      cmd = new CmdAdd(data);
+      cmd = new CmdAdd(argc,argv);
       break;
 
     case DELETE:
-      cmd = new CmdDel( std::atoi(argv[2]) );
+      cmd = new CmdDel(argc,argv);
       break;
 
     case FINISH:
-      cmd = new CmdFinish( std::atoi(argv[2]) );
+      cmd = new CmdFinish(argc,argv);
       break;
 
     case GET:
       cmd = new CmdGet();
       break;
 
-    case ERROR:
-      std::cout << COMMAND_UNKNOWN_ERROR << std::endl;
-      exit(-1);
-      // TODO: Show help.
+    case SHOW:
+      cmd = new CmdShow(argc,argv);
       break;
 
-    case SHOW:
-      cmd = new CmdShow( std::atoi(argv[2]) );
+    case HELP:
+      cmd = new CmdHelp();
       break;
+
   }
 
   return cmd;
 }
 
-int main( int argc, char ** argv ){
+// -----------------------------------------------------------------------------
 
+int main( int argc, char ** argv ){
   Command * command = nullptr;
   Tasker tasker;
 
-  command = parse_argc(argc,argv);
+  command = parse_command(argc,argv);
   command->set_tasker(&tasker);
-
   command->execute();
+
   delete command;
 }

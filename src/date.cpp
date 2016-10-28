@@ -131,6 +131,12 @@ std::string Date::to_str() const{
 
 // -----------------------------------------------------------------------------
 
+bool Date::empty() const{
+  return day == 0 || month == 0 || year == 0;
+}
+
+// -----------------------------------------------------------------------------
+
 Date & Date::operator=(const Date & date){
   day = date.day;
   month = date.month;

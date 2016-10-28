@@ -61,6 +61,8 @@ public:
   void            set_from_str(const std::string & date);
   std::string     to_str() const;
 
+  bool            empty() const;
+
   Date &          operator=(const Date & date);
 };
 

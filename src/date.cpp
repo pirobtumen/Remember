@@ -29,10 +29,11 @@
 #include "date.hpp"
 #include <iostream>
 
+char Date::separator = '/';
+
 // -----------------------------------------------------------------------------
 
 Date::Date(){
-  separator = '/';
   set_date(0,0,0);
 }
 

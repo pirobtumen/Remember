@@ -41,7 +41,7 @@ void CmdGet::execute() const{
   std::cout << std::endl;
   std::cout << "-------------------------------------------" << std::endl;
   std::cout << "ID" << " | " << "Task" << std::endl;
-  std::cout << "------------------------------------------" << std::endl;
+  std::cout << "-------------------------------------------" << std::endl;
 
   for(auto & task: task_list){
 

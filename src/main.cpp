@@ -68,7 +68,7 @@ Command * parse_command(int argc, char * argv[]){
   */
   Command * cmd = nullptr;
 
-  CmdType input = ADD;
+  CmdType input = GET;
 
   std::map<std::string,CmdType> command_list;
   std::map<std::string,CmdType>::iterator found;

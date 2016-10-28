@@ -51,8 +51,9 @@ void CmdAdd::execute() const{
   for(auto & word: data)
     task_data += word + ' ';
 
+
   find = arguments.find(end_date);
-  if( find != arguments.end() )
+  if( find != arguments.end() && !find->second.empty()  )
     task.set_end_date(Date(find->second));
 
   task.set_task(task_data);

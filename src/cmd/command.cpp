@@ -83,7 +83,6 @@ void Command::parse(int argc, char * argv[]){
       err = true;
 
     else if(arg){
-      std::cout << "OK " << argv[i] << std::endl;
       arg_find->second = argv[i];
       arg = false;
     }

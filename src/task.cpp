@@ -84,6 +84,9 @@ void Task::load_from_str( const std::string & task_data ){
   if( data_split.size() >= 3 )
     created_date.set_from_str(data_split[2]);
 
+  if( data_split.size() >= 4 )
+    end_date.set_from_str(data_split[3]);
+
 }
 
 // -----------------------------------------------------------------------------
@@ -109,6 +112,8 @@ std::string Task::to_str() const{
   task_data += char_finished;
   task_data += separator;
   task_data += created_date.to_str();
+  task_data += separator;
+  task_data += end_date.to_str();
 
   return task_data;
 }

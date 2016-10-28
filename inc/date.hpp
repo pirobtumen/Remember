@@ -37,7 +37,7 @@
 
 class Date{
 private:
-  char separator;
+  static char separator;
 
   short int  day;
   short int  month;

@@ -16,10 +16,9 @@ all: dir $(SOURCES) $(BIN)$(EXECUTABLE)
 
 dir:
 	mkdir -p $(BIN)
-	mkdir -p $($OBJ) $($OBJ)cmd
+	mkdir -p $(OBJ) $(OBJ)cmd
 
 $(BIN)$(EXECUTABLE): $(OBJECTS)
-
 	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
 
 $(OBJ)%.o: $(SRC)%.cpp

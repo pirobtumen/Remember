@@ -84,7 +84,7 @@ void Date::set_current(){
   std::tm * current_time = std::localtime(&time_);
 
   day = current_time->tm_mday;
-  month = current_time->tm_mon;
+  month = current_time->tm_mon + 1;
   year = BASE_YEAR + current_time->tm_year;
 
 }

@@ -43,11 +43,17 @@ CmdHelp::CmdHelp(int argc, char * argv[]){
 void CmdHelp::execute(){
   std::cout << "Remember help" << std::endl;
   std::cout << "==========================================================="<<std::endl;
-  std::cout << "add,         a   [Task] [-f DD/MM/YYYY]   - Add a new task. -f: end date." << std::endl;
-  std::cout << "get,         g                            - Show all tasks." << std::endl;
-  std::cout << "show,        s   [Task ID]                - Show task info." << std::endl;
-  std::cout << "finish,      f   <Task ID ...>            - Finish one or more tasks." << std::endl;
-  std::cout << "delete, del, d   <Task ID ...>            - Delete one or more tasks." << std::endl;
+  std::cout << "add,         a   [Task]                   - Add a new task." << std::endl;
+  std::cout << "             -f  [-f DD/MM/YYYY]           - End date." << std::endl;
+  std::cout << std::endl;
+  std::cout << "get,         g                            - Show not finished tasks." << std::endl;
+  std::cout << "             -f                           - Show finished tasks only." << std::endl;
+  std::cout << "             -a                           - Show all." << std::endl;
+  std::cout << std::endl;
+  std::cout << "show,        s   [ID]                     - Show task info." << std::endl;
+  std::cout << "finish,      f   <ID 1, ID 2 ...>         - Finish/Start one or more tasks." << std::endl;
+  std::cout << "delete, del, d   <ID 1, ID 2 ...>         - Delete one or more tasks." << std::endl;
+  std::cout << "help,        h                            - Show help." << std::endl;
 }
 
 // -----------------------------------------------------------------------------

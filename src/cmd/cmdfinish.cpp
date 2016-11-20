@@ -47,7 +47,7 @@ void CmdFinish::execute(){
     if(!finished)
       std::cout << "Task " << id << " finished." << std::endl;
     else
-      std::cout << "Task " << id << " unfinished." << std::endl;
+      std::cout << "Task " << id << " started." << std::endl;
   }
 
   tasker -> save();

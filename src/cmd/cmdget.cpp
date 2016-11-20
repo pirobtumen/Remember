@@ -34,7 +34,7 @@ CmdGet::CmdGet(){}
 
 // -----------------------------------------------------------------------------
 
-void CmdGet::execute() const{
+void CmdGet::execute(){
   unsigned int count = 1;
   std::vector<Task> task_list;
 
@@ -48,10 +48,10 @@ void CmdGet::execute() const{
   for(auto & task: task_list){
 
     if(task.is_finished()){
-      std::cout << "\033[9m" << count << " - "  << task.get_task() << "\033[0m"<< std::endl;
+      std::cout << "\033[9m" << task.get_id() << " - "  << task.get_task() << "\033[0m"<< std::endl;
     }
     else{
-      std::cout << count << " | " << task.get_task() << std::endl;
+      std::cout << task.get_id() << " | " << task.get_task() << std::endl;
     }
     count++;
   }

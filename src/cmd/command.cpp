@@ -105,7 +105,7 @@ void Command::set_tasker(Tasker * new_tasker) const{
 
 // -----------------------------------------------------------------------------
 
-void Command::execute() const{
+void Command::execute(){
   std::cout << "Something's wrong :)" << std::endl;
 }
 

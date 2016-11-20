@@ -37,7 +37,7 @@ class CmdFinish : public Command{
 public:
   CmdFinish(int argc, char * argv[]);
 
-  void execute() const;
+  void execute();
 };
 
 // -----------------------------------------------------------------------------

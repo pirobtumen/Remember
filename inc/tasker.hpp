@@ -44,7 +44,7 @@ public:
 
   Task                        get_task(unsigned int id) const;
   void                        get_task_list(std::vector<Task> & tasks);
-  void                        add_task(const Task & task);
+  void                        add_task(Task & task);
   void                        delete_task(unsigned int id);
   bool                        finish_task(unsigned int id);
 

@@ -39,7 +39,7 @@ CmdAdd::CmdAdd(int argc, char * argv[]){
 
 // -----------------------------------------------------------------------------
 
-void CmdAdd::execute() const{
+void CmdAdd::execute(){
   // TODO: check if date is correct
   std::map<std::string,std::string>::const_iterator find;
   std::string end_date = "-f";
@@ -51,14 +51,16 @@ void CmdAdd::execute() const{
   for(auto & word: data)
     task_data += word + ' ';
 
-
   find = arguments.find(end_date);
   if( find != arguments.end() && !find->second.empty()  )
     task.set_end_date(Date(find->second));
 
   task.set_task(task_data);
 
+  // TODO: check if can be added
   tasker -> add_task(task);
+
+  // TODO: check if can be saved
   tasker -> save();
 
   std::cout << "Task added." << std::endl;

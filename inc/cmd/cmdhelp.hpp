@@ -40,7 +40,7 @@ public:
   CmdHelp();
   CmdHelp(int argc, char * argv[]);
 
-  void execute() const;
+  void execute();
 };
 
 // -----------------------------------------------------------------------------

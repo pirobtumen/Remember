@@ -40,7 +40,7 @@ CmdHelp::CmdHelp(int argc, char * argv[]){
 
 // -----------------------------------------------------------------------------
 
-void CmdHelp::execute() const{
+void CmdHelp::execute(){
   std::cout << "Remember help" << std::endl;
   std::cout << "==========================================================="<<std::endl;
   std::cout << "add,         a   [Task] [-f DD/MM/YYYY]   - Add a new task. -f: end date." << std::endl;

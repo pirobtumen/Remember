@@ -30,11 +30,14 @@
 
 // -----------------------------------------------------------------------------
 
-TaskDB::TaskDB(){}
+TaskDB::TaskDB(){
+  last_id = 0;
+}
 
 // -----------------------------------------------------------------------------
 
 TaskDB::TaskDB(const std::string & name){
+  last_id = 0;
   set_name(name);
 }
 
@@ -50,7 +53,7 @@ void TaskDB::read(){
   std::ifstream file(db_file_name, std::ofstream::in );
   std::string line;
   Task task;
-  unsigned int id = task.get_id();
+  unsigned int id = 0;
 
   if( file.is_open() ){
 
@@ -58,11 +61,12 @@ void TaskDB::read(){
 
     while(!file.eof()){
       task.load_from_str(line);
-      //task_list.insert(std::make_pair(id,task));
+      id = task.get_id();
+      task_list.insert(std::make_pair(id,task));
 
-      //if(id > last_id)
-      //  last_id = id;
-      add_task(task);
+      if(id > last_id)
+        last_id = id;
+      
       std::getline(file,line);
     }
 
@@ -88,8 +92,9 @@ void TaskDB::save() const{
 
 // -----------------------------------------------------------------------------
 
-void TaskDB::add_task( const Task & task ){
+void TaskDB::add_task( Task & task ){
   last_id += 1;
+  task.set_id(last_id);
   task_list.insert(std::make_pair(last_id, task));
 }
 

@@ -40,7 +40,7 @@ private:
 
 public:
   CmdShow(int argc, char * argv[]);
-  void execute() const;
+  void execute();
 };
 
 // -----------------------------------------------------------------------------

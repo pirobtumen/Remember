@@ -39,7 +39,7 @@ Tasker::Tasker(){
 
 // -----------------------------------------------------------------------------
 
-void Tasker::add_task(const Task & task){
+void Tasker::add_task(Task & task){
   task_db.add_task(task);
 }
 
@@ -60,10 +60,8 @@ void Tasker::get_task_list(std::vector<Task> & tasks){
 
 void Tasker::delete_task(unsigned int id){
 
-  // TODO: check size
   // TODO: return value
-  if( id > 0 )
-    task_db.delete_task(id);
+  task_db.delete_task(id);
 
 }
 

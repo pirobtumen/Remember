@@ -38,7 +38,7 @@ class CmdGet : public Command{
 public:
   CmdGet();
 
-  void execute() const;
+  void execute();
 };
 
 // -----------------------------------------------------------------------------

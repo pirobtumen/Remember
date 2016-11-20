@@ -36,7 +36,7 @@ CmdDel::CmdDel(int argc, char * argv[]){
 
 // -----------------------------------------------------------------------------
 
-void CmdDel::execute() const{
+void CmdDel::execute(){
   unsigned int id;
 
   for( auto & id_str: data){

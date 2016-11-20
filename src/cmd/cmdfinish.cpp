@@ -36,7 +36,7 @@ CmdFinish::CmdFinish(int argc, char * argv[]){
 
 // -----------------------------------------------------------------------------
 
-void CmdFinish::execute() const{
+void CmdFinish::execute(){
   bool finished;
   unsigned int id;
 

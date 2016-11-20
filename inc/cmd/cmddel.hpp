@@ -37,7 +37,7 @@ class CmdDel : public Command{
 public:
   CmdDel(int argc, char * argv[]);
 
-  void execute() const;
+  void execute();
 };
 
 // -----------------------------------------------------------------------------

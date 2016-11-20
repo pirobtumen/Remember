@@ -39,7 +39,7 @@ class CmdAdd : public Command{
 public:
   CmdAdd(int argc, char * argv[]);
 
-  void execute() const;
+  void execute();
 };
 
 // -----------------------------------------------------------------------------

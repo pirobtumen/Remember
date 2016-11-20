@@ -56,7 +56,7 @@ public:
 
   void set_tasker(Tasker * tasker) const;
 
-  virtual void execute() const;
+  virtual void execute();
   virtual ~Command();
 };
 

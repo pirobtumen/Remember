@@ -44,7 +44,6 @@ private:
   Date end_date;
   unsigned int id;
   bool finished;
-  bool deleted;
 
 public:
   Task();
@@ -65,6 +64,7 @@ public:
   bool            is_finished() const;
   bool            finish();
 
+  void            set_id(unsigned int new_id);
   unsigned int    get_id() const;
   bool            is_empty() const ;
 };

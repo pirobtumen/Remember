@@ -47,6 +47,7 @@ Task::Task( const std::string & new_data )
 
 // -----------------------------------------------------------------------------
 
+// TODO: use a map to fill the data
 void Task::load_from_str( const std::string & task_data ){
   std::vector<std::string> data_split;
   std::string tmp = "";
@@ -84,6 +85,8 @@ void Task::load_from_str( const std::string & task_data ){
   if( data_split.size() >= 4 )
     end_date.set_from_str(data_split[3]);
 
+  if( data_split.size() >= 5 )
+    id = std::stoi(data_split[4]);
 }
 
 // -----------------------------------------------------------------------------
@@ -111,16 +114,23 @@ std::string Task::to_str() const{
   task_data += created_date.to_str();
   task_data += separator;
   task_data += end_date.to_str();
+  task_data += separator;
+  task_data += std::to_string(id);
 
   return task_data;
 }
 
 // -----------------------------------------------------------------------------
 
-unsigned int Task::get_id() const{
-  return id == 0;
+void Task::set_id(unsigned int new_id){
+  id = new_id;
 }
 
+// -----------------------------------------------------------------------------
+
+unsigned int Task::get_id() const{
+  return id;
+}
 
 // -----------------------------------------------------------------------------
 

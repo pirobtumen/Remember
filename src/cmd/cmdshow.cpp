@@ -36,7 +36,7 @@ CmdShow::CmdShow(int argc, char * argv[]){
 
 // -----------------------------------------------------------------------------
 
-void CmdShow::execute() const{
+void CmdShow::execute(){
   Task task;
   unsigned int id;
   std::string finished;

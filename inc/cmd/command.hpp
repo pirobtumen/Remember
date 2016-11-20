@@ -47,9 +47,12 @@ protected:
   std::map<std::string,bool> options;
   std::map<std::string,std::string> arguments;
 
-  void add_option(const char * opt);
-  void add_argument(const char * opt);
-  void parse(int argc, char * argv[]);
+  void  add_option(const char * opt);
+  void  add_argument(const char * opt);
+
+  bool  check_option(const char * opt) const;
+
+  void  parse(int argc, char * argv[]);
 
 public:
   Command();

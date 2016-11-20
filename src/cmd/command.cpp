@@ -44,6 +44,18 @@ void Command::add_option(const char * opt){
 
 // -----------------------------------------------------------------------------
 
+bool Command::check_option(const char * opt) const{
+  bool status = false;
+  std::map<std::string,bool>::const_iterator find = options.find(opt);
+
+  if( find != options.end()  )
+    status = (*find).second;
+
+  return status;
+}
+
+// -----------------------------------------------------------------------------
+
 void Command::add_argument(const char * opt){
   arguments.insert(std::pair<const char *,std::string>(opt,std::string()));
 }

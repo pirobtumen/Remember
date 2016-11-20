@@ -30,12 +30,16 @@
 
 // -----------------------------------------------------------------------------
 
-CmdGet::CmdGet(){}
+CmdGet::CmdGet(int argc, char * argv[]){
+  add_option("-f"); // Show finished only
+  add_option("-a"); // Show all
+  parse(argc,argv);
+}
 
 // -----------------------------------------------------------------------------
 
 void CmdGet::execute(){
-  unsigned int count = 1;
+  bool show_finished = false;
   std::vector<Task> task_list;
 
   tasker -> get_task_list(task_list);
@@ -45,16 +49,34 @@ void CmdGet::execute(){
   std::cout << "ID" << " | " << "Task" << std::endl;
   std::cout << "-------------------------------------------" << std::endl;
 
-  for(auto & task: task_list){
+  if(check_option("-f")){
 
-    if(task.is_finished()){
-      std::cout << "\033[9m" << task.get_id() << " - "  << task.get_task() << "\033[0m"<< std::endl;
+    for(auto & task: task_list){
+
+      if(task.is_finished())
+        std::cout << task.get_id() << " | " << task.get_task() << std::endl;
+
     }
-    else{
-      std::cout << task.get_id() << " | " << task.get_task() << std::endl;
-    }
-    count++;
+
   }
+  else{
+    show_finished = check_option("-a");
+
+    for(auto & task: task_list){
+
+      if(!task.is_finished()){
+        std::cout << task.get_id() << " | " << task.get_task() << std::endl;
+      }
+      else if(show_finished){
+        std::cout << "\033[9m";
+        std::cout << task.get_id() << " | " << task.get_task() << std::endl;
+        std::cout << "\033[0m";
+      }
+
+    }
+
+  }
+
   std::cout << "-------------------------------------------" << std::endl;
   std::cout << std::endl;
 }

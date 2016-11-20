@@ -36,7 +36,7 @@
 class CmdGet : public Command{
 
 public:
-  CmdGet();
+  CmdGet(int argc, char * argv[]);
 
   void execute();
 };

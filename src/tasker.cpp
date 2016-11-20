@@ -45,14 +45,15 @@ void Tasker::add_task(const Task & task){
 
 // -----------------------------------------------------------------------------
 
-const Task & Tasker::get_task(unsigned int id) const{
+// TODO: return reference -> keep an empty task.
+Task Tasker::get_task(unsigned int id) const{
   return task_db.get_task(id);
 }
 
 // -----------------------------------------------------------------------------
 
-const std::vector<Task> & Tasker::get_task_list(){
-  return task_db.get_task_list();
+void Tasker::get_task_list(std::vector<Task> & tasks){
+  task_db.get_task_list(tasks);
 }
 
 // -----------------------------------------------------------------------------

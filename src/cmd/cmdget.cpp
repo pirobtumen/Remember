@@ -36,7 +36,9 @@ CmdGet::CmdGet(){}
 
 void CmdGet::execute() const{
   unsigned int count = 1;
-  const std::vector<Task> & task_list = tasker -> get_task_list();
+  std::vector<Task> task_list;
+
+  tasker -> get_task_list(task_list);
 
   std::cout << std::endl;
   std::cout << "-------------------------------------------" << std::endl;

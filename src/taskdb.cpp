@@ -49,17 +49,23 @@ void TaskDB::set_name(const std::string & name){
 void TaskDB::read(){
   std::ifstream file(db_file_name, std::ofstream::in );
   std::string line;
+  Task task;
+  unsigned int id = task.get_id();
 
   if( file.is_open() ){
 
     std::getline(file,line);
 
     while(!file.eof()){
+      task.load_from_str(line);
+      //task_list.insert(std::make_pair(id,task));
 
-      task_list.push_back(Task(line));
+      //if(id > last_id)
+      //  last_id = id;
+      add_task(task);
       std::getline(file,line);
-
     }
+
   }
 
   file.close();
@@ -69,25 +75,12 @@ void TaskDB::read(){
 
 void TaskDB::save() const{
   /*
-    Save not deleted tasks, and moves finished to the end of the file.
+    Save all tasks.
   */
   std::ofstream file(db_file_name, std::ofstream::out | std::ofstream::trunc);
-  std::vector<Task> finished;
 
-  for( auto & task : task_list ){
-
-    if(!task.is_deleted()){
-      if(!task.is_finished())
-        file << task.to_str() << std::endl;
-
-      else
-        finished.push_back(task);
-    }
-
-  }
-
-  for( auto & task : finished )
-    file << task.to_str() << std::endl;
+  for( auto & task : task_list )
+        file << task.second.to_str() << std::endl;
 
   file.close();
 
@@ -96,33 +89,46 @@ void TaskDB::save() const{
 // -----------------------------------------------------------------------------
 
 void TaskDB::add_task( const Task & task ){
-  task_list.push_back(task);
+  last_id += 1;
+  task_list.insert(std::make_pair(last_id, task));
 }
 
 // -----------------------------------------------------------------------------
 
-// Prec: id > 0
-const Task & TaskDB::get_task( unsigned int id ) const{
-  return task_list[id-1];
+// TODO: return reference -> keep an empty task.
+Task TaskDB::get_task( unsigned int id ) const{
+  std::map<unsigned int,Task>::const_iterator it = task_list.find(id);
+  Task task;
+
+  if( it != task_list.end() )
+    task = (*it).second;
+
+  return task;
 }
 
 // -----------------------------------------------------------------------------
 
-// Prec: id > 0
 void TaskDB::delete_task(unsigned int id){
-  task_list[id-1].mark_deleted();
+  task_list.erase(id);
 }
 
 // -----------------------------------------------------------------------------
 
 bool TaskDB::finish_task(unsigned int id){
-  return task_list[id-1].finish();
+  std::map<unsigned int,Task>::iterator it = task_list.find(id);
+  bool status = false;
+
+  if( it != task_list.end() )
+    status = (*it).second.finish();
+
+  return status;
 }
 
 // -----------------------------------------------------------------------------
 
-const std::vector<Task> & TaskDB::get_task_list() const{
-  return task_list;
+void TaskDB::get_task_list(std::vector<Task> & tasks) const{
+  for(auto & t : task_list)
+    tasks.push_back(t.second);
 }
 
 // -----------------------------------------------------------------------------

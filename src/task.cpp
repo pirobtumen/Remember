@@ -33,8 +33,8 @@
 Task::Task()
 {
   data = "";
-  deleted = false;
   finished = false;
+  id = 0;
   created_date.set_current();
 }
 
@@ -42,9 +42,6 @@ Task::Task()
 
 Task::Task( const std::string & new_data )
 {
-  data = "";
-  deleted = false;
-  finished = false;
   load_from_str(new_data);
 }
 
@@ -120,14 +117,15 @@ std::string Task::to_str() const{
 
 // -----------------------------------------------------------------------------
 
-bool Task::is_deleted() const{
-  return deleted;
+unsigned int Task::get_id() const{
+  return id == 0;
 }
+
 
 // -----------------------------------------------------------------------------
 
-void Task::mark_deleted(){
-  deleted = true;
+bool Task::is_empty() const{
+  return id == 0;
 }
 
 // -----------------------------------------------------------------------------

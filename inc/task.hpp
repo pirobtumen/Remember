@@ -42,6 +42,7 @@ private:
   std::string data;
   Date created_date;
   Date end_date;
+  unsigned int id;
   bool finished;
   bool deleted;
 
@@ -61,11 +62,11 @@ public:
   void            set_created_date(const Date & date);
   void            set_end_date(const Date & date);
 
-  bool            is_deleted() const;
-  void            mark_deleted();
-
   bool            is_finished() const;
   bool            finish();
+
+  unsigned int    get_id() const;
+  bool            is_empty() const ;
 };
 
 // -----------------------------------------------------------------------------

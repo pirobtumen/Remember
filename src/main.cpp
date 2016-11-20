@@ -127,7 +127,7 @@ Command * parse_command(int argc, char * argv[]){
       break;
 
     case GET:
-      cmd = new CmdGet();
+      cmd = new CmdGet(argc,argv);
       break;
 
     case SHOW:

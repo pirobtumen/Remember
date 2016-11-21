@@ -42,7 +42,7 @@ private:
 public:
   Tasker();
 
-  Task                        get_task(unsigned int id) const;
+  const Task &                get_task(unsigned int id) const;
   void                        get_task_list(std::vector<Task> & tasks);
   void                        add_task(Task & task);
   void                        delete_task(unsigned int id);

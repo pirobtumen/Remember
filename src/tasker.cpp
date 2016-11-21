@@ -45,8 +45,7 @@ void Tasker::add_task(Task & task){
 
 // -----------------------------------------------------------------------------
 
-// TODO: return reference -> keep an empty task.
-Task Tasker::get_task(unsigned int id) const{
+const Task & Tasker::get_task(unsigned int id) const{
   return task_db.get_task(id);
 }
 

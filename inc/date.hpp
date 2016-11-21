@@ -69,11 +69,13 @@ public:
   Date &          operator=(const Date & date);
 
   friend  bool    operator==(const Date & d1,const Date & d2);
+  friend  bool operator<(const Date & d1,const Date & d2);
 };
 
 // -----------------------------------------------------------------------------
 
 bool operator==(const Date & d1,const Date & d2);
+bool operator<(const Date & d1,const Date & d2);
 
 // -----------------------------------------------------------------------------
 

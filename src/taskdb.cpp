@@ -94,7 +94,8 @@ void TaskDB::read(){
 
   }
 
-  last_id += 1;
+  if(last_id > 1)
+    last_id += 1;
 
   file.close();
 }
@@ -120,7 +121,6 @@ void TaskDB::add_task( Task & task ){
   /*
     Add a new task.
   */
-
   task.set_id(last_id);
   task_list.insert(std::make_pair(last_id, task));
   last_id += 1;

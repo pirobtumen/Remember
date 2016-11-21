@@ -94,7 +94,7 @@ void TaskDB::read(){
 
   }
 
-  if(last_id > 1)
+  if(last_id > 1 || id == 1)
     last_id += 1;
 
   file.close();

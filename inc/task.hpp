@@ -39,34 +39,38 @@
 
 class Task{
 private:
-  std::string data;
-  Date created_date;
-  Date end_date;
   unsigned int id;
   bool finished;
+  std::string data;
+  Date creation_date;
+  Date finish_date;
+  std::string tag;
 
 public:
   Task();
   Task( const std::string & new_data );
 
-  void            load_from_str( const std::string & task_data );
-  std::string     to_str() const;
+  void                    load_from_str( const std::string & task_data );
+  std::string             to_str() const;
 
-  void            set_task(const std::string & task);
-  const           std::string & get_task() const;
+  const std::string &     get_task() const;
+  const Date &            get_creation_date() const;
+  const Date &            get_finish_date() const;
+  unsigned int            get_id() const;
+  const std::string &     get_tag() const;
 
-  const           Date & get_created_date() const;
-  const           Date & get_end_date() const;
+  void                    set_task(const std::string & task);
+  void                    set_created_date(const Date & date);
+  void                    set_finish_date(const Date & date);
+  void                    set_id(unsigned int new_id);
+  void                    set_tag(const std::string & new_tag);
 
-  void            set_created_date(const Date & date);
-  void            set_end_date(const Date & date);
+  bool                    finish();
 
-  bool            is_finished() const;
-  bool            finish();
+  bool                    is_finished() const;
+  bool                    is_empty() const ;
 
-  void            set_id(unsigned int new_id);
-  unsigned int    get_id() const;
-  bool            is_empty() const ;
+
 };
 
 // -----------------------------------------------------------------------------

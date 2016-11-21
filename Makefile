@@ -24,5 +24,9 @@ $(BIN)$(EXECUTABLE): $(OBJECTS)
 $(OBJ)%.o: $(SRC)%.cpp
 	$(CC) -c $(CFLAGS) $< -o $@
 
+install:
+	mkdir -p ~/.local/bin
+	cp bin/$(EXECUTABLE) ~/.local/bin/$(EXECUTABLE)
+
 clean:
 	rm -f $(OBJ)cmd/*.o $(OBJ)*.o $(BIN)*

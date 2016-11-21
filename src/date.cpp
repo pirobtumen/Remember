@@ -119,6 +119,9 @@ void Date::set_from_str(const std::string & date){
 // -----------------------------------------------------------------------------
 
 std::string Date::to_str() const{
+  /*
+    Convert the date to string.
+  */
   std::string date = "";
 
   date += std::to_string(day);
@@ -133,12 +136,19 @@ std::string Date::to_str() const{
 // -----------------------------------------------------------------------------
 
 bool Date::empty() const{
+  /*
+    Checks if the object is empty.
+  */
   return day == 0 || month == 0 || year == 0;
 }
 
 // -----------------------------------------------------------------------------
 
 Date & Date::operator=(const Date & date){
+  /*
+    Simple copy assingment operator.
+  */
+
   day = date.day;
   month = date.month;
   year = date.year;
@@ -147,3 +157,10 @@ Date & Date::operator=(const Date & date){
 }
 
 // -----------------------------------------------------------------------------
+
+bool operator==(const Date & d1,const Date & d2){
+  /*
+    Simple comparison operator.
+  */
+  return d1.day == d2.day && d1.month == d2.month && d1.year == d2.year;
+}

@@ -94,6 +94,7 @@ Command * parse_command(int argc, char * argv[]){
 
   command_list.insert(std::pair<const char*,CmdType>("help",CmdType::HELP));
   command_list.insert(std::pair<const char*,CmdType>("h",CmdType::HELP));
+
   // 2. Get CommandType
   // ---------------------------------------------------------------------------
 
@@ -149,9 +150,9 @@ int main( int argc, char ** argv ){
   Command * command = nullptr;
   Tasker tasker;
 
-  command = parse_command(argc,argv);
-  command->set_tasker(&tasker);
-  command->execute();
+  command = parse_command(argc,argv);   // Parse arguments
+  command->set_tasker(&tasker);         // Set controller
+  command->execute();                   // Execute command
 
   delete command;
 }

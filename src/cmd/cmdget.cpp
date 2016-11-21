@@ -39,16 +39,31 @@ CmdGet::CmdGet(int argc, char * argv[]){
 // -----------------------------------------------------------------------------
 
 void CmdGet::execute(){
+  /*
+    Show tasks.
+    Default: not finished tasks.
+    -a: show all tasks.
+    -f: show finished tasks.
+
+    If a task end date is today, the color is bold green.
+  */
   bool show_finished = false;
+  Date today_date;
   std::vector<Task> task_list;
 
+  // Get tasks
   tasker -> get_task_list(task_list);
 
+  // Get current date
+  today_date.set_current();
+
+  // Show header
   std::cout << std::endl;
   std::cout << "-------------------------------------------" << std::endl;
   std::cout << "ID" << " | " << "Task" << std::endl;
   std::cout << "-------------------------------------------" << std::endl;
 
+  // Print finished tasks
   if(check_option("-f")){
 
     for(auto & task: task_list){
@@ -60,18 +75,26 @@ void CmdGet::execute(){
 
   }
   else{
+    // Check "all" option
     show_finished = check_option("-a");
 
+    // Print tasks
     for(auto & task: task_list){
 
       if(!task.is_finished()){
+        // Text: bold green
+        if(task.get_end_date() == today_date)
+          std::cout << "\033[32;1m";
+
         std::cout << task.get_id() << " | " << task.get_task() << std::endl;
       }
       else if(show_finished){
         std::cout << "\033[9m";
         std::cout << task.get_id() << " | " << task.get_task() << std::endl;
-        std::cout << "\033[0m";
       }
+
+      // Clear text effects
+      std::cout << "\033[0m";
 
     }
 

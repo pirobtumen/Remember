@@ -49,6 +49,7 @@ void CmdGet::execute(){
   */
   bool show_finished = false;
   Date today_date;
+  Date end_date;
   std::vector<Task> task_list;
 
   // Get tasks
@@ -82,9 +83,15 @@ void CmdGet::execute(){
     for(auto & task: task_list){
 
       if(!task.is_finished()){
+
+        end_date = task.get_end_date();
+
         // Text: bold green
-        if(task.get_end_date() == today_date)
+        if(end_date == today_date)
           std::cout << "\033[32;1m";
+        // Text: bold red
+        else if(!end_date.empty() && end_date < today_date)
+          std::cout << "\033[31;1m";
 
         std::cout << task.get_id() << " | " << task.get_task() << std::endl;
       }

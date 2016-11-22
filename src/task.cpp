@@ -30,8 +30,7 @@
 
 // -----------------------------------------------------------------------------
 
-Task::Task()
-{
+Task::Task(){
   data = "";
   finished = false;
   id = 0;
@@ -41,86 +40,139 @@ Task::Task()
 
 // -----------------------------------------------------------------------------
 
-Task::Task( const std::string & new_data )
-{
+Task::Task( const std::string & new_data ){
   load_from_str(new_data);
 }
 
 // -----------------------------------------------------------------------------
 
-// TODO: use a map to fill the data
 void Task::load_from_str( const std::string & task_data ){
-  std::vector<std::string> data_split;
-  std::string tmp = "";
+  /*
+    Load task data from string.
+
+    String format: field:value,
+  */
+  std::map<std::string,std::string> data;
+  std::map<std::string,std::string>::const_iterator find;
+  bool add_field = true;
+  std::string field = "";
+  std::string value = "";
   char next_char;
   unsigned int data_size = task_data.size();
 
+  // Extract data
   for( unsigned int i = 0; i < data_size; i++ ){
 
     next_char = task_data[i];
 
     if(next_char == ','){
 
-      data_split.push_back(tmp);
-      tmp = "";
+      data.insert(std::make_pair(field,value));
+      field = "";
+      value = "";
+      add_field = true;
 
     }
+    else if(next_char == ':')
+      add_field = false;
+    else if(add_field)
+      field += next_char;
     else
-      tmp += next_char;
+      value += next_char;
 
   }
 
-  data_split.push_back(tmp);
+  // ID
+  find = data.find("id");
+  if(find != data.cend())
+    set_id(std::stoi((*find).second));
 
-  if(data_split.size() >= 1 )
-    data = data_split[0];
+  // Task
+  find = data.find("task");
+  if(find != data.cend())
+    set_task((*find).second);
 
-  if( data_split.size() >= 2 && data_split[1][0] == '1' )
-    finished = true;
+  // Finished
+  find = data.find("finished");
+  if(find != data.cend())
+    set_status((*find).second);
+
+  // Tag
+  find = data.find("tag");
+  if(find != data.cend())
+    set_tag((*find).second);
+
+  // Creation date
+  find = data.find("creation_date");
+  if(find != data.cend())
+    set_creation_date(Date((*find).second));
+
+  // Finish date
+  find = data.find("finish_date");
+  if(find != data.cend())
+    set_finish_date(Date((*find).second));
+}
+
+// -----------------------------------------------------------------------------
+
+void Task::set_status(const std::string & status){
+  /*
+    Set if the task is finished or not.
+  */
+  if(status == "1")
+    finished = 1;
   else
-    finished = false;
-
-  if( data_split.size() >= 3 )
-    creation_date.set_from_str(data_split[2]);
-
-  if( data_split.size() >= 4 )
-    finish_date.set_from_str(data_split[3]);
-
-  if( data_split.size() >= 5 )
-    id = std::stoi(data_split[4]);
-
-  if( data_split.size() >= 6 )
-    tag = data_split[5];
+    finished = 0;
 }
 
 // -----------------------------------------------------------------------------
 
 void Task::set_task(const std::string & task){
+  /*
+    Set task.
+  */
   data = task;
 }
 // -----------------------------------------------------------------------------
 
 const std::string & Task::get_task() const{
+  /*
+    Return task.
+  */
   return data;
 }
 
 // -----------------------------------------------------------------------------
 
 std::string Task::to_str() const{
+  /*
+    Turn the task into a string.
+
+    String format: field:vlaue,
+  */
   const char separator = ',';
 
   char char_finished = (finished)? '1' : '0';
-  std::string task_data = data;
+  std::string task_data;
 
+  task_data.reserve(64);
+
+  task_data += "task:";
+  task_data += data;
   task_data += separator;
+  task_data += "finished:";
   task_data += char_finished;
   task_data += separator;
+  task_data += "creation_date:";
   task_data += creation_date.to_str();
   task_data += separator;
+  task_data += "finish_date:";
   task_data += finish_date.to_str();
   task_data += separator;
+  task_data += "id:";
   task_data += std::to_string(id);
   task_data += separator;
+  task_data += "tag:";
   task_data += tag;
 
   return task_data;
@@ -129,30 +181,45 @@ std::string Task::to_str() const{
 // -----------------------------------------------------------------------------
 
 void Task::set_id(unsigned int new_id){
+  /*
+    Set ID.
+  */
   id = new_id;
 }
 
 // -----------------------------------------------------------------------------
 
 unsigned int Task::get_id() const{
+  /*
+    Return id.
+  */
   return id;
 }
 
 // -----------------------------------------------------------------------------
 
 bool Task::is_empty() const{
+  /*
+    Check if the task is an empty task.
+  */
   return id == 0;
 }
 
 // -----------------------------------------------------------------------------
 
 bool Task::is_finished() const{
+  /*
+    Return if the task is finished.
+  */
   return finished;
 }
 
 // -----------------------------------------------------------------------------
 
 bool Task::finish(){
+  /*
+    Finish/Start the task.
+  */
   bool last_value = finished;
   finished = !finished;
   return last_value;
@@ -161,30 +228,54 @@ bool Task::finish(){
 // -----------------------------------------------------------------------------
 
 const Date & Task::get_creation_date() const{
+  /*
+    Set the creation date.
+  */
   return creation_date;
 }
 
 // -----------------------------------------------------------------------------
 
+void Task::set_creation_date(const Date & date){
+  /*
+    Set the creation date.
+  */
+  creation_date = date;
+}
+
+// -----------------------------------------------------------------------------
+
 const Date & Task::get_finish_date() const{
+  /*
+    Return the finish date.
+  */
   return finish_date;
 }
 
 // -----------------------------------------------------------------------------
 
 void Task::set_finish_date(const Date & date){
+  /*
+    Set the finish date.
+  */
   finish_date = date;
 }
 
 // -----------------------------------------------------------------------------
 
 const std::string & Task::get_tag() const{
+  /*
+    Return tag.
+  */
   return tag;
 }
 
 // -----------------------------------------------------------------------------
 
 void Task::set_tag(const std::string & new_tag){
+  /*
+    Set tag.
+  */
   tag = new_tag;
 }
 

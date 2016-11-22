@@ -30,7 +30,7 @@
 #define __TASK_HPP
 
 #include <string>
-#include <vector>
+#include <map>
 #include <iostream>
 
 #include "date.hpp"
@@ -46,6 +46,8 @@ private:
   Date finish_date;
   std::string tag;
 
+  void                    set_status(const std::string & status);
+
 public:
   Task();
   Task( const std::string & new_data );
@@ -60,7 +62,7 @@ public:
   const std::string &     get_tag() const;
 
   void                    set_task(const std::string & task);
-  void                    set_created_date(const Date & date);
+  void                    set_creation_date(const Date & date);
   void                    set_finish_date(const Date & date);
   void                    set_id(unsigned int new_id);
   void                    set_tag(const std::string & new_tag);

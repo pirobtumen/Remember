@@ -33,6 +33,7 @@
 CmdAdd::CmdAdd(int argc, char * argv[]){
 
   add_argument("-f"); // Finish date
+  add_argument("-t"); // Tag
 
   parse(argc, argv);
 }
@@ -42,7 +43,8 @@ CmdAdd::CmdAdd(int argc, char * argv[]){
 void CmdAdd::execute(){
   // TODO: check if date is correct
   std::map<std::string,std::string>::const_iterator find;
-  std::string end_date = "-f";
+  std::string finish_date = "-f";
+  std::string tag = "-t";
   std::string task_data = "";
   Task task;
 
@@ -51,9 +53,13 @@ void CmdAdd::execute(){
   for(auto & word: data)
     task_data += word + ' ';
 
-  find = arguments.find(end_date);
+  find = arguments.find(finish_date);
   if( find != arguments.end() && !find->second.empty()  )
-    task.set_end_date(Date(find->second));
+    task.set_finish_date(Date(find->second));
+
+  find = arguments.find(tag);
+  if( find != arguments.end() && !find->second.empty()  )
+    task.set_tag(find->second);
 
   task.set_task(task_data);
 

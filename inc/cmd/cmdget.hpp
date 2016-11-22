@@ -35,7 +35,8 @@
 // -----------------------------------------------------------------------------
 
 class CmdGet : public Command{
-
+private:
+  void print_task(const Task & task) const;
 public:
   CmdGet(int argc, char * argv[]);
 

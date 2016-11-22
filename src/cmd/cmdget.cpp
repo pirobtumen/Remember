@@ -31,9 +31,16 @@
 // -----------------------------------------------------------------------------
 
 CmdGet::CmdGet(int argc, char * argv[]){
-  add_option("-f"); // Show finished only
-  add_option("-a"); // Show all
+  add_option("-f");     // Show finished only
+  add_option("-a");     // Show all
+  add_argument("-t");   // Tag
   parse(argc,argv);
+}
+
+// -----------------------------------------------------------------------------
+
+void CmdGet::print_task(const Task & task) const{
+  std::cout << task.get_id() << " | " << task.get_tag() << " | " << task.get_task() << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -49,10 +56,15 @@ void CmdGet::execute(){
   */
   bool show_finished = false;
   Date today_date;
+  Date finish_date;
   std::vector<Task> task_list;
+  std::string tag_arg = get_argument("-t");
 
   // Get tasks
-  tasker -> get_task_list(task_list);
+  if( tag_arg.empty() )
+    tasker -> get_task_list(task_list);
+  else
+    tasker -> get_task_list(task_list,get_argument("-t"));
 
   // Get current date
   today_date.set_current();
@@ -60,7 +72,7 @@ void CmdGet::execute(){
   // Show header
   std::cout << std::endl;
   std::cout << "-------------------------------------------" << std::endl;
-  std::cout << "ID" << " | " << "Task" << std::endl;
+  std::cout << "ID" << " | " << "Tag" << " | " << "Task" << std::endl;
   std::cout << "-------------------------------------------" << std::endl;
 
   // Print finished tasks
@@ -69,7 +81,7 @@ void CmdGet::execute(){
     for(auto & task: task_list){
 
       if(task.is_finished())
-        std::cout << task.get_id() << " | " << task.get_task() << std::endl;
+        print_task(task);
 
     }
 
@@ -82,15 +94,21 @@ void CmdGet::execute(){
     for(auto & task: task_list){
 
       if(!task.is_finished()){
-        // Text: bold green
-        if(task.get_end_date() == today_date)
-          std::cout << "\033[32;1m";
 
-        std::cout << task.get_id() << " | " << task.get_task() << std::endl;
+        finish_date = task.get_finish_date();
+
+        // Text: bold green
+        if(finish_date == today_date)
+          std::cout << "\033[32;1m";
+        // Text: bold red
+        else if(!finish_date.empty() && finish_date < today_date)
+          std::cout << "\033[31;1m";
+
+        print_task(task);
       }
       else if(show_finished){
         std::cout << "\033[9m";
-        std::cout << task.get_id() << " | " << task.get_task() << std::endl;
+        print_task(task);
       }
 
       // Clear text effects

@@ -53,13 +53,15 @@ void CmdShow::execute(){
     std::cout << "-------------------------------------------" << std::endl;
     std::cout << "ID:       " << id << std::endl;
     std::cout << "Task:     " << task.get_task() << std::endl;
+    std::cout << "Tag:      " << task.get_tag() << std::endl;
     std::cout << "Finished: " << finished << std::endl;
-    std::cout << "Created:  " << task.get_created_date().to_str() << std::endl;
+    std::cout << "Created:  " << task.get_creation_date().to_str() << std::endl;
 
-    if( !task.get_end_date().empty() )
-      std::cout << "End date: " << task.get_end_date().to_str() << std::endl;
+    // TODO: print date in colors
+    if( !task.get_finish_date().empty() )
+      std::cout << "Finish date: " << task.get_finish_date().to_str() << std::endl;
     else
-      std::cout << "End date: no" << std::endl;
+      std::cout << "Finish date: no" << std::endl;
     std::cout << "-------------------------------------------" << std::endl;
   }
 

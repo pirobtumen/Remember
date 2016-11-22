@@ -51,6 +51,7 @@ protected:
   void  add_argument(const char * opt);
 
   bool  check_option(const char * opt) const;
+  std::string get_argument(const char * opt) const;
 
   void  parse(int argc, char * argv[]);
 

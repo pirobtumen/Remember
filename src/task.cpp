@@ -35,7 +35,8 @@ Task::Task()
   data = "";
   finished = false;
   id = 0;
-  created_date.set_current();
+  creation_date.set_current();
+  tag = "General";
 }
 
 // -----------------------------------------------------------------------------
@@ -80,13 +81,16 @@ void Task::load_from_str( const std::string & task_data ){
     finished = false;
 
   if( data_split.size() >= 3 )
-    created_date.set_from_str(data_split[2]);
+    creation_date.set_from_str(data_split[2]);
 
   if( data_split.size() >= 4 )
-    end_date.set_from_str(data_split[3]);
+    finish_date.set_from_str(data_split[3]);
 
   if( data_split.size() >= 5 )
     id = std::stoi(data_split[4]);
+
+  if( data_split.size() >= 6 )
+    tag = data_split[5];
 }
 
 // -----------------------------------------------------------------------------
@@ -111,11 +115,13 @@ std::string Task::to_str() const{
   task_data += separator;
   task_data += char_finished;
   task_data += separator;
-  task_data += created_date.to_str();
+  task_data += creation_date.to_str();
   task_data += separator;
-  task_data += end_date.to_str();
+  task_data += finish_date.to_str();
   task_data += separator;
   task_data += std::to_string(id);
+  task_data += separator;
+  task_data += tag;
 
   return task_data;
 }
@@ -154,20 +160,32 @@ bool Task::finish(){
 
 // -----------------------------------------------------------------------------
 
-const Date & Task::get_created_date() const{
-  return created_date;
+const Date & Task::get_creation_date() const{
+  return creation_date;
 }
 
 // -----------------------------------------------------------------------------
 
-const Date & Task::get_end_date() const{
-  return end_date;
+const Date & Task::get_finish_date() const{
+  return finish_date;
 }
 
 // -----------------------------------------------------------------------------
 
-void Task::set_end_date(const Date & date){
-  end_date = date;
+void Task::set_finish_date(const Date & date){
+  finish_date = date;
+}
+
+// -----------------------------------------------------------------------------
+
+const std::string & Task::get_tag() const{
+  return tag;
+}
+
+// -----------------------------------------------------------------------------
+
+void Task::set_tag(const std::string & new_tag){
+  tag = new_tag;
 }
 
 // -----------------------------------------------------------------------------

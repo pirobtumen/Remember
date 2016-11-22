@@ -16,14 +16,17 @@ private:
   std::string db_file_name;
   unsigned int last_id;
 
+  void initialize();
+
 public:
   TaskDB();
   TaskDB(const std::string & name);
 
   void                        set_name(const std::string & name);
 
-  Task                        get_task( unsigned int id ) const;
+  const Task &                get_task( unsigned int id ) const;
   void                        get_task_list(std::vector<Task> & tasks) const;
+  void                        get_task_list(std::vector<Task> & tasks, const std::string & tag) const;
 
   void                        add_task( Task & task );
   void                        delete_task(unsigned int id);

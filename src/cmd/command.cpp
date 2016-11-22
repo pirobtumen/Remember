@@ -62,6 +62,18 @@ void Command::add_argument(const char * opt){
 
 // -----------------------------------------------------------------------------
 
+std::string Command::get_argument(const char * opt) const{
+  std::map<std::string,std::string>::const_iterator find = arguments.find(opt);
+  std::string arg = "";
+
+  if( find != arguments.end() )
+    arg = (*find).second;
+
+  return arg;
+}
+
+// -----------------------------------------------------------------------------
+
 void Command::parse(int argc, char * argv[]){
 
   char c;

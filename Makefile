@@ -7,6 +7,7 @@ CC=g++
 CFLAGS= -Wall -O2 -I$(INC) -std=c++11
 LDFLAGS=
 
+HEADERS= $(wildcard $(INC)*.hpp) $(wildcard $(INC)*/*.hpp)
 SOURCES= $(wildcard $(SRC)*.cpp) $(wildcard $(SRC)*/*.cpp)
 # OBJECTS = $(SOURCES: .cpp=.o)
 OBJECTS=$(patsubst $(SRC)%.cpp,$(OBJ)%.o, $(SOURCES))
@@ -18,7 +19,7 @@ dir:
 	mkdir -p $(BIN)
 	mkdir -p $(OBJ) $(OBJ)cmd
 
-$(BIN)$(EXECUTABLE): $(OBJECTS)
+$(BIN)$(EXECUTABLE): $(OBJECTS) $(HEADERS)
 	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
 
 $(OBJ)%.o: $(SRC)%.cpp

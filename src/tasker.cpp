@@ -51,8 +51,11 @@ const Task & Tasker::get_task(unsigned int id) const{
 
 // -----------------------------------------------------------------------------
 
-void Tasker::get_task_list(std::vector<Task> & tasks){
-  task_db.get_task_list(tasks);
+void Tasker::get_task_list(std::vector<Task> & tasks, std::string tag){
+  if(tag.empty())
+    task_db.get_task_list(tasks);
+  else
+    task_db.get_task_list(tasks,tag);
 }
 
 // -----------------------------------------------------------------------------

@@ -180,3 +180,18 @@ void TaskDB::get_task_list(std::vector<Task> & tasks) const{
 }
 
 // -----------------------------------------------------------------------------
+
+void TaskDB::get_task_list(std::vector<Task> & tasks, const std::string & tag) const{
+
+  std::map<unsigned int, Task>::const_iterator start = task_list.cbegin();
+  std::map<unsigned int, Task>::const_iterator end = task_list.cend();
+
+  start++; // Skip ID:0
+
+  for(auto & t = start; t != end; t++ )
+    if((*t).second.get_tag() == tag)
+      tasks.push_back((*t).second);
+
+}
+
+// -----------------------------------------------------------------------------

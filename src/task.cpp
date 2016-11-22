@@ -82,6 +82,8 @@ void Task::load_from_str( const std::string & task_data ){
 
   }
 
+  data.insert(std::make_pair(field,value));
+
   // ID
   find = data.find("id");
   if(find != data.cend())

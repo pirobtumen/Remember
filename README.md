@@ -2,8 +2,27 @@
 
 Fast and powerfull command line task manager.
 
+## Install
+
+Now you have to compile it manually.
+
+Dependencies:
+
+- gtkmm
+
+Install:
+
+Make
+
+Under linux you can run:
+- make install
+
+It copies the executable in /home/<user>/.local/bin.
+In future versions it will support all the platforms.
+
 ## Features
 
+- NEW: Basic GUI :)
 - Add/Delete tasks.
 - Finish/Start tasks.
 - Finish date.
@@ -12,6 +31,11 @@ Fast and powerfull command line task manager.
 ## Commands
 
 ### Get
+Commands: **gui**
+
+Shows a basic GUI :)
+In future versions it will be shown by default.
+
 Commands: **get, g**
 
 Action: show tasks.
@@ -19,7 +43,7 @@ Action: show tasks.
 Options:
 - -a: show all.
 - -f: show finished tasks only.
-- -t tag: show tasks with 'tag'. 
+- -t tag: show tasks with 'tag'.
 
 Usage: remember [get, g] [-f,-a]
 

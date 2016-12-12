@@ -47,6 +47,7 @@ public:
   void                        add_task(Task & task);
   void                        delete_task(unsigned int id);
   bool                        finish_task(unsigned int id);
+  bool                        finish_task(unsigned int id, bool status);
 
   void                        save() const;
 };

@@ -229,6 +229,17 @@ bool Task::finish(){
 
 // -----------------------------------------------------------------------------
 
+bool Task::finish(bool status){
+  /*
+    Finish/Start the task.
+  */
+  bool last_value = finished;
+  finished = status;
+  return last_value;
+}
+
+// -----------------------------------------------------------------------------
+
 const Date & Task::get_creation_date() const{
   /*
     Set the creation date.

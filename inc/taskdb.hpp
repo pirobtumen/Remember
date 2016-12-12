@@ -32,6 +32,7 @@ public:
   void                        delete_task(unsigned int id);
 
   bool                        finish_task(unsigned int id);
+  bool                        finish_task(unsigned int id, bool status);
 
   void                        read();
   void                        save() const;

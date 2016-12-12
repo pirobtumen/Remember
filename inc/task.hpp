@@ -68,6 +68,7 @@ public:
   void                    set_tag(const std::string & new_tag);
 
   bool                    finish();
+  bool                    finish(bool status);
 
   bool                    is_finished() const;
   bool                    is_empty() const ;

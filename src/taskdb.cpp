@@ -156,12 +156,24 @@ bool TaskDB::finish_task(unsigned int id){
       Finish/Starts a task by its ID.
   */
   std::map<unsigned int,Task>::iterator it = task_list.find(id);
-  bool status = false;
+  bool old_status = false;
 
   if( it != task_list.end() )
-    status = (*it).second.finish();
+    old_status = (*it).second.finish();
 
-  return status;
+  return old_status;
+}
+
+// -----------------------------------------------------------------------------
+
+bool TaskDB::finish_task(unsigned int id, bool status){
+  std::map<unsigned int,Task>::iterator it = task_list.find(id);
+  bool old_status = false;
+
+  if( it != task_list.end() )
+    old_status = (*it).second.finish(status);
+
+  return old_status;
 }
 
 // -----------------------------------------------------------------------------

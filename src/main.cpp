@@ -53,10 +53,11 @@
 #include "cmd/cmdfinish.hpp"
 #include "cmd/cmdshow.hpp"
 #include "cmd/cmdhelp.hpp"
+#include "cmd/cmdgui.hpp"
 
 // -----------------------------------------------------------------------------
 
-enum CmdType {GET, ADD, DELETE, FINISH, SHOW, HELP};
+enum CmdType {GET, ADD, DELETE, FINISH, SHOW, HELP, GUI};
 
 // -----------------------------------------------------------------------------
 
@@ -94,6 +95,8 @@ Command * parse_command(int argc, char * argv[]){
 
   command_list.insert(std::pair<const char*,CmdType>("help",CmdType::HELP));
   command_list.insert(std::pair<const char*,CmdType>("h",CmdType::HELP));
+
+  command_list.insert(std::pair<const char*,CmdType>("gui",CmdType::GUI));
 
   // 2. Get CommandType
   // ---------------------------------------------------------------------------
@@ -133,6 +136,10 @@ Command * parse_command(int argc, char * argv[]){
 
     case SHOW:
       cmd = new CmdShow(argc,argv);
+      break;
+
+    case GUI:
+      cmd = new CmdGui(argc,argv);
       break;
 
     case HELP:

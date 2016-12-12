@@ -80,3 +80,9 @@ bool Tasker::finish_task(unsigned int id){
 }
 
 // -----------------------------------------------------------------------------
+
+bool Tasker::finish_task(unsigned int id, bool status){
+  return task_db.finish_task(id,status);
+}
+
+// -----------------------------------------------------------------------------

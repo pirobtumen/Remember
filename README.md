@@ -1,6 +1,6 @@
 # Remember
 
-Fast and powerfull command line task manager.
+Fast and powerfull GUI and command line task manager.
 
 ## Install
 

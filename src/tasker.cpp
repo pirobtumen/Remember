@@ -69,6 +69,12 @@ void Tasker::delete_task(unsigned int id){
 
 // -----------------------------------------------------------------------------
 
+void Tasker::update_task(const Task & task){
+  task_db.update_task(task);
+}
+
+// -----------------------------------------------------------------------------
+
 void Tasker::save() const{
   task_db.save();
 }

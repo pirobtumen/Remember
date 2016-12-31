@@ -122,17 +122,21 @@ void TaskItem::load_task(const Task & task){
   id = task.get_id();
 
   set_status(task.is_finished());
+  set_task(task_txt);
 }
 
 // -----------------------------------------------------------------------------
 
 void TaskItem::load_task_with_tag(const Task & task){
   task_txt = task.get_tag();
-  task_txt += " - ";
+  if(task_txt != "")
+    task_txt += " - ";
+
   task_txt += task.get_task();
   id = task.get_id();
 
   set_status(task.is_finished());
+  set_task(task_txt);
 }
 
 // -----------------------------------------------------------------------------

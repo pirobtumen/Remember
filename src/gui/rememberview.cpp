@@ -85,7 +85,7 @@ void RememberView::on_button_add_clicked(){
     tasker -> add_task(task);
     tasker -> save();
 
-    // Update
+    // Update view
     task_list.push_back(task);
     listbox.add(task_list.back());
     task_list.back().show_all();
@@ -102,8 +102,21 @@ void RememberView::row_clicked(Gtk::ListBoxRow* row){
 
   response = task_view.run();
 
-  // TODO:
-  //tasker -> update_task(task);
+  // OK
+  if( response == Gtk::ResponseType::RESPONSE_OK ){
+
+    // Get data
+    task.set_task(task_view.get_task());
+    task.set_tag(task_view.get_tag());
+
+    // Set data
+    tasker -> update_task(task);
+    tasker -> save();
+
+    // Update view
+    ((TaskItem *)row) -> load_task_with_tag(task);
+  }
+
 }
 
 // -----------------------------------------------------------------------------

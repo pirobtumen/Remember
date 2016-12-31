@@ -128,6 +128,18 @@ void TaskDB::add_task( Task & task ){
 
 // -----------------------------------------------------------------------------
 
+void TaskDB::update_task(const Task & task){
+  std::map<unsigned int,Task>::iterator it = task_list.find(task.get_id());
+
+  // TODO: Return value
+
+  if( it != task_list.end() )
+    (*it).second = task;
+
+}
+
+// -----------------------------------------------------------------------------
+
 const Task & TaskDB::get_task( unsigned int id ) const{
   /*
       Get a task by its ID.

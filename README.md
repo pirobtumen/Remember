@@ -2,39 +2,57 @@
 
 Fast and powerfull GUI and command line task manager.
 
+![Remember](/screenshot/remember.png)
+
 ## Install
 
 Now you have to compile it manually.
 
 Dependencies:
+- g++
+- gtkmm30-devel
 
-- gtkmm
+Build:
 
-Install:
+make
 
-Make
+Run:
+
+./bin/remember
+
+You can copy the executable wherever you want, or maybe add it to the path.
 
 Under linux you can run:
 - make install
 
 It copies the executable in /home/<user>/.local/bin.
+
 In future versions it will support all the platforms.
 
 ## Features
 
-- NEW: Basic GUI :)
+- Basic GUI :)
 - Add/Delete tasks.
 - Finish/Start tasks.
 - Finish date.
 - Group tasks using **tags**.
 
+## GUI Mode
+
+Do you prefer use it in a graphic mode? No problem!
+
+./remember gui
+
 ## Commands
 
-### Get
+### GUI
+
 Commands: **gui**
 
 Shows a basic GUI :)
 In future versions it will be shown by default.
+
+### Get
 
 Commands: **get, g**
 

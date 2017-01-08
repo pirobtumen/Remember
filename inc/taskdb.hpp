@@ -13,10 +13,13 @@
 class TaskDB{
 private:
   std::map<unsigned int, Task> task_list;
+  std::map<std::string,int> tag_list;
   std::string db_file_name;
   unsigned int last_id;
 
   void initialize();
+  void add_tag(const std::string & tag);
+  void del_tag(const std::string & tag);
 
 public:
   TaskDB();

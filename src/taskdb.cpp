@@ -67,6 +67,33 @@ void TaskDB::set_name(const std::string & name){
 
 // -----------------------------------------------------------------------------
 
+void TaskDB::add_tag(const std::string & tag){
+  std::map<std::string,int>::iterator it = tag_list.find(tag);
+
+  if(it != tag_list.end())
+    (*it).second += 1;
+  else
+    tag_list.insert(std::make_pair(tag,1));
+}
+
+// -----------------------------------------------------------------------------
+
+void TaskDB::del_tag(const std::string & tag){
+  std::map<std::string,int>::iterator it = tag_list.find(tag);
+
+  if(it != tag_list.end()){
+    (*it).second -= 1;
+
+    if((*it).second == 0)
+      tag_list.erase(tag);
+
+  }
+
+
+}
+
+// -----------------------------------------------------------------------------
+
 // TODO: return error code
 void TaskDB::read(){
   /*
@@ -77,18 +104,30 @@ void TaskDB::read(){
   Task task;
   unsigned int id = 0;
 
+  // Clear current data
+  task_list.clear();
+  tag_list.clear();
+
+  // Check if the DB is open
   if( file.is_open() ){
 
+    // Get each line and parse it
     std::getline(file,line);
 
     while(!file.eof()){
       task.load_from_str(line);
       id = task.get_id();
+
+      // Add task
       task_list.insert(std::make_pair(id,task));
+
+      // Add tag
+      add_tag(task.get_tag());
 
       if(id > last_id)
         last_id = id;
 
+      // Get next line
       std::getline(file,line);
     }
 
@@ -121,8 +160,10 @@ void TaskDB::add_task( Task & task ){
   /*
     Add a new task.
   */
+
   task.set_id(last_id);
   task_list.insert(std::make_pair(last_id, task));
+  add_tag(task.get_tag());
   last_id += 1;
 }
 
@@ -133,8 +174,11 @@ void TaskDB::update_task(const Task & task){
 
   // TODO: Return value
 
-  if( it != task_list.end() )
+  if( it != task_list.end() ){
+    del_tag((*it).second.get_tag());
+    add_tag(task.get_tag());
     (*it).second = task;
+  }
 
 }
 
@@ -158,6 +202,8 @@ void TaskDB::delete_task(unsigned int id){
   /*
       Delete a task by its ID.
   */
+  Task task = get_task(id);
+  del_tag(task.get_tag());
   task_list.erase(id);
 }
 
@@ -194,13 +240,20 @@ void TaskDB::get_task_list(std::vector<Task> & tasks) const{
   /*
       Get all tasks.
   */
+
   std::map<unsigned int, Task>::const_iterator start = task_list.cbegin();
   std::map<unsigned int, Task>::const_iterator end = task_list.cend();
 
-  start++; // Skip ID:0
+  // Check if empty
+  if(start != end){
 
-  for(auto & t = start; t != end; t++ )
-    tasks.push_back((*t).second);
+    start++;
+
+    for(auto & t = start; t != end; t++ )
+        tasks.push_back((*t).second);
+
+  }
+
 }
 
 // -----------------------------------------------------------------------------

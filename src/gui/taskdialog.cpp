@@ -74,26 +74,22 @@ void TaskDialog::set_actions(){
 
 // -----------------------------------------------------------------------------
 
-std::string TaskDialog::get_task(){
-  return task.get_text();
+Task TaskDialog::get_task(){
+  Task dialog_task;
+
+  // TODO: set creation date.
+  dialog_task.set_task(task.get_text());
+  // TODO: if empty -> General
+  dialog_task.set_tag(tag.get_text());
+
+  return dialog_task;
 }
 
 // -----------------------------------------------------------------------------
 
-std::string TaskDialog::get_tag(){
-  return tag.get_text();
-}
-
-// -----------------------------------------------------------------------------
-
-void TaskDialog::set_task(const std::string & task_txt){
-  task.set_text(task_txt);
-}
-
-// -----------------------------------------------------------------------------
-
-void TaskDialog::set_tag(const std::string & tag_txt){
-  tag.set_text(tag_txt);
+void TaskDialog::set_task(const Task & itask){
+  task.set_text(itask.get_task());
+  tag.set_text(itask.get_tag());
 }
 
 // -----------------------------------------------------------------------------

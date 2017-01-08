@@ -46,7 +46,6 @@
 
 #include "gui/taskitem.hpp"
 #include "gui/taskdialog.hpp"
-#include "gui/taskview.hpp"
 #include "tasker.hpp"
 
 class RememberView : public Gtk::Window{

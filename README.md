@@ -31,10 +31,9 @@ In future versions it will support all the platforms.
 
 ## Features
 
-- Basic GUI :)
 - Add/Delete tasks.
-- Finish/Start tasks.
-- Finish date.
+- Finish tasks.
+- Creation & Finish date.
 - Group tasks using **tags**.
 
 ## GUI Mode
@@ -42,6 +41,11 @@ In future versions it will support all the platforms.
 Do you prefer use it in a graphic mode? No problem!
 
 ./remember gui
+
+- Add button.
+- Click the check button to finish a task.
+- Click a task to edit it.
+- Delete button.
 
 ## Commands
 

@@ -37,6 +37,8 @@
 #include <gtkmm/grid.h>
 #include <string>
 
+#include "task.hpp"
+
 // -----------------------------------------------------------------------------
 
 class TaskDialog : public Gtk::Dialog{
@@ -62,11 +64,8 @@ protected:
 public:
   TaskDialog(const std::string & title, Gtk::Window & parent);
 
-  std::string get_task();
-  std::string get_tag();
-
-  void set_task(const std::string & task_txt);
-  void set_tag(const std::string & tag_txt);
+  Task get_task();
+  void set_task(const Task & tag_txt);
 };
 
 // -----------------------------------------------------------------------------

@@ -78,8 +78,7 @@ void RememberView::on_button_add_clicked(){
   if( response == Gtk::ResponseType::RESPONSE_OK ){
 
     // Get data
-    task.set_task(dialog.get_task());
-    task.set_tag(dialog.get_tag());
+    task = dialog.get_task();
 
     // Set data
     tasker -> add_task(task);
@@ -98,7 +97,9 @@ void RememberView::on_button_add_clicked(){
 void RememberView::row_clicked(Gtk::ListBoxRow* row){
   int response;
   Task task = tasker -> get_task(((TaskItem *)row) -> get_task_id());
-  TaskView task_view(task,"Task", (*this));
+  TaskDialog task_view("Task", (*this));
+
+  task_view.set_task(task);
 
   response = task_view.run();
 
@@ -106,8 +107,7 @@ void RememberView::row_clicked(Gtk::ListBoxRow* row){
   if( response == Gtk::ResponseType::RESPONSE_OK ){
 
     // Get data
-    task.set_task(task_view.get_task());
-    task.set_tag(task_view.get_tag());
+    task = task_view.get_task();
 
     // Set data
     tasker -> update_task(task);
